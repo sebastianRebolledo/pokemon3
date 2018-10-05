@@ -3,7 +3,8 @@ package modelo;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Jugador implements Serializable,Comparable{
+
+public class Jugador implements Serializable,Comparable<Jugador>{
 
 	private String nombre;
 	private int puntaje;
@@ -34,16 +35,16 @@ public class Jugador implements Serializable,Comparable{
 	}
 	
 	
-	public int compareTo(Jugador j) {
-	if(this.darNombre().equalsIgnoreCase(j.nombre)) {
-		return 0;
-	}else if(this.darNombre().compareTo(j.darNombre()) > 0) {
-		return 1;
-	}else{
-		return -1;
-	}
-	}
-	
+//	public int compareTo(Jugador j) {
+//	if(this.darNombre().equalsIgnoreCase(j.nombre)) {
+//		return 0;
+//	}else if(this.darNombre().compareTo(j.darNombre()) > 0) {
+//		return 1;
+//	}else{
+//		return -1;
+//	}
+//	}
+//	
 	
 
 	public int compareToNombre(Object arg0) {
@@ -51,25 +52,25 @@ public class Jugador implements Serializable,Comparable{
 		
 	}
 	
-	public int compareToPuntaje(int pPuntaje) {
-//		  if (puntaje < pPuntaje) {
-//                return -1;
-//            }
-//            if (puntaje > pPuntaje) {
-//                return 1;
-//            }
-//            return 0;
-		return compareTo(pPuntaje);
-        }
+//	public int compareToPuntaje(int pPuntaje) {
+////		  if (puntaje < pPuntaje) {
+////                return -1;
+////            }
+////            if (puntaje > pPuntaje) {
+////                return 1;
+////            }
+////            return 0;
+//		return compareTo(pPuntaje);
+//        }
 	
 	
 	
 	
 public int compareToPuntos(Jugador j) {
 	
-	if(puntaje==j.darPuntaje()) {
+	if(this.puntaje==j.darPuntaje()) {
 		return 0;
-	}else if(puntaje>j.darPuntaje()) {
+	}else if(this.puntaje>j.darPuntaje()) {
 		return 1;
 	}else {
 		return -1;
@@ -79,12 +80,24 @@ public int compareToPuntos(Jugador j) {
 
 
 
-@Override
-public int compareTo(Object o) {
-	// TODO Auto-generated method stub
-	return 0;
-}
+//@Override
+//public int compareTo(Object o) {
+//	// TODO Auto-generated method stub
+//	return 0;
+//}
+//
 
+@Override
+public int compareTo(Jugador arg0) {
+	
+	int ret = 0;		
+	if(this.puntaje> arg0.darPuntaje()) {
+		ret = 1;
+	}else {
+		ret = -1;
+	}
+	return ret;
+}
 
 
 

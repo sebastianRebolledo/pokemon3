@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import modelo.Entrenamiento;
 import modelo.Jugador;
 import modelo.Pokemon;
 import javafx.scene.Scene;
@@ -20,6 +21,8 @@ private Stage stage;
 	private static Pokemon pokemon;
 	
 	private static Jugador jugador;
+	
+	private static Entrenamiento entrenamiento= new Entrenamiento();
 	
 	private static LanzarController lanzar;
 	@Override
@@ -40,6 +43,9 @@ private Stage stage;
 	public Pokemon darPokemon() {
 		return pokemon;
 	}
+	public Entrenamiento darEntrenamiento() {
+		return entrenamiento;
+	}
 	
 	
 	public ArrayList<Pokemon> darPokemones(){
@@ -59,7 +65,6 @@ public void cambiarJugadores(ArrayList<Jugador> jugadorsitos) {
 }
 
 	public static void main(String[] args) {
-		
 		pokemones= new ArrayList<Pokemon>();
 		jugadores= new ArrayList<Jugador>();
 //		

@@ -25,7 +25,7 @@
                <children>
                   <ImageView fitHeight="453.0" fitWidth="594.0" layoutY="1.0">
                      <image>
-                        <Image url="@../../../../entrenamiento.jpg" />
+                        <Image url="@../../../../../Desktop/entrenamiento.jpg" />
                      </image>
                   </ImageView>
                   <Circle fx:id="pokemonC" fill="DODGERBLUE" layoutX="552.0" layoutY="378.0" onMouseClicked="#moverEnsayo" radius="35.0" stroke="BLACK" strokeType="INSIDE" />

@@ -1,8 +1,19 @@
 package application;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
@@ -23,6 +34,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -30,16 +43,20 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
+import modelo.Jugador;
 import modelo.Pokemon;
 
 public class LanzarController {
 
 	static private Main main;
 	
-
+	@FXML
+	private Label lblNickName;
+	@FXML
+	private TextField txtNombre;
 	
 	@FXML
 	Rectangle rBandera;
@@ -54,11 +71,22 @@ public class LanzarController {
      Timeline timel;
 	
 	
+	@FXML
+	private Button btnCargarJuego;
+ 
+	@FXML
+	private Button guardar;
+	
+	@FXML
+	private Stage stage;
 	
 	@FXML 
 	private Rectangle rectangle2;
-
 	
+	@FXML
+	private Label lblPuntaje;
+
+	private SampleController sample;
 	 @FXML
 	   private Button btnPokemon1;
 	   
@@ -84,11 +112,19 @@ public class LanzarController {
 	  
 		public void initalize() {
 			
+			
+
+			txtNombre.setText(sample.darNombre());
+			txtNombre.setDisable(false);
+			lblPuntaje.setText("0");
+			lblNickName.setText("NickName");
 			asignarImagenesApokemon() ;
 			
 
 			rectangle2.setHeight(pokemon.darRadio());
 			rectangle2.setWidth(pokemon.darRadio());
+			
+
 
 		}
 	  
@@ -96,7 +132,16 @@ public class LanzarController {
 	  
 	  
 		public LanzarController() {
+			lblNickName=new Label();
+			txtNombre= new TextField();
+			
 //			asignarImagenesApokemon();
+			try {
+				sample=new SampleController();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			pokemon= new Pokemon("Pkachu",509.0,50.0,false,"/img/pokemon1.png");
 			rectangle2= new Rectangle();
 			rBandera= new Rectangle();
@@ -111,6 +156,10 @@ public class LanzarController {
 //			rectangle2.setWidth(pokemon.darRadio());
 			
 			main= new Main();
+			
+			archivoPokemones() ;
+
+			guardarJugadoresSerializables();
 		
 
 		}
@@ -176,9 +225,261 @@ public void asignarImagenesApokemon() {
 		       }
 		
 		
+		 public void agregarJugadores() {
+				Jugador jugadorsito1=new Jugador("Carmen",4);
+				Jugador jugadorsito2= new Jugador("Marcela",14);
+				Jugador jugadorsito3= new Jugador("Julian",23);
+				Jugador jugadorsito4=new Jugador("Jose" , 12);
+				Jugador jugadorsito5=new Jugador("Armando", 32);
+				Jugador jugadorsito6= new Jugador("Andrea",22);
+				Jugador jugadorsito7= new Jugador("Juana",34);
+				main.darJugadores().add(jugadorsito1);
+				main.darJugadores().add(jugadorsito2);
+				main.darJugadores().add(jugadorsito3);
+				main.darJugadores().add(jugadorsito4);
+				main.darJugadores().add(jugadorsito5);
+				main.darJugadores().add(jugadorsito6);
+				main.darJugadores().add(jugadorsito7);
+				
+			}
+		 
+		 
+		 
+		 
+		 
+		 public void archivoPokemones() {
+				
+				File file= new File("archivos/pokemones.txt");
+				try {
+					FileReader fileReader= new FileReader(file);
+					BufferedReader buffer= new BufferedReader(fileReader);
+					String line="";
+					
+					while((line = buffer.readLine()) != null){ //Se leen las lineas hasta el final del documento
+						System.out.println(line);
+						String[] data= line.split(";");
+						String nombrePokemon=data[0];
+						double posicion=Double.parseDouble(data[1]);
+						double radio=Double.parseDouble(data[2]);
+						boolean esAtrapado=Boolean.parseBoolean(data[3]);
+						
+						String imagen=data[4];
+						Pokemon poke= new Pokemon(nombrePokemon,posicion,radio,esAtrapado, imagen);
+						main.darPokemones().add(poke);
+					}
+					buffer.close();
+					
+				} catch (Exception e) {
+					System.out.println(e);
+				}
+				
+			}
+		 
+		 
+		 
+		 
+		 public void cargarJuegoDeMiComputadora(ActionEvent e) {
+				if(e.getSource()==btnCargarJuego) {
+					FileChooser fileChooser = new FileChooser();
+					File file = fileChooser.showOpenDialog(stage);
+					
+					
+					if(file!=null){
+						FileReader fr = null;
+						BufferedReader br = null;
+						String texto = "";
+						try {
+							fr = new FileReader(file);
+							br = new BufferedReader(fr);
+							
+							
+							while((texto = br.readLine()) != null){ //Se leen las lineas hasta el final del documento
+								System.out.println(texto);
+								String[] data= texto.split(";");
+								String nombreJugador=data[0];
+								int puntaje=Integer.parseInt(data[1]);
+								txtNombre.setText(nombreJugador);
+								lblPuntaje.setText(puntaje+"");
+							}
+							
+							br.close();
+//							String st = br.readLine();
+//							while (st != null) {
+//								texto = texto + st + "\n";
+//								st = br.readLine();
+//							}
+						} catch (Exception ex) {
+//							textArea.appendText(e.toString());
+						} finally {
+							try {
+								fr.close();
+							} catch (Exception e2) {
+//								textArea.appendText(e2.toString());
+							}
+						}
+						
+					}
+					
+					
+					
+				}
+				
+			}
+
+		 
+		 
+		 
+		 
+		 
 		 
 		 
  
+		 
+		 
+		 
+		 public void guardarArchivoEnComputadora(ActionEvent e) throws IOException {
+				
+				if (e.getSource()==guardar) {
+					FileChooser fileChooser = new FileChooser();
+					fileChooser.setInitialFileName("Puntaje");
+					FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+					fileChooser.getExtensionFilters().add(extFilter);
+					fileChooser.setSelectedExtensionFilter(extFilter);
+					File file = fileChooser.showSaveDialog(main.darEstage());
+					
+					
+					
+//					BufferedReader buffer= new BufferedReader(fileReader);
+					
+
+					
+					if(file!=null){
+						
+						FileWriter fw = null;
+						BufferedWriter bw = null;
+						try {
+							// EL segundo parametro es un boolean
+							// En true escribe al final
+							// En false escribe al inicio
+							fw = new FileWriter(file, false);
+							bw = new BufferedWriter(fw);
+							String nombre=txtNombre.getText();
+							String puntaje=lblPuntaje.getText();
+							bw.write(nombre+";"+puntaje);
+							
+//							String texto = textArea.getText();
+//							bw.write(texto, 0, texto.length());
+						} catch (Exception e1) {
+//							textArea.appendText(e1.toString());
+						} finally {
+							try {
+								bw.close();
+							} catch (Exception e2) {
+//								textArea.appendText(e2.toString());
+							}
+						}
+					}
+				}
+				
+				
+				
+			}
+		 
+		 
+		 
+		 public void leerJugadoresSerializadosDeTxt() {
+				
+			    FileInputStream fileInStr = null;
+			    ObjectInputStream entrada = null;
+
+			  ArrayList<Jugador> jugadorsitos;
+			    try {
+
+			    	fileInStr = new FileInputStream("archivos/GuardarJuego.txt");
+			        entrada = new ObjectInputStream(fileInStr);
+
+			        jugadorsitos=(ArrayList<Jugador>) entrada.readObject();
+			    
+			        main.cambiarJugadores(jugadorsitos);
+
+			        
+			    } catch (FileNotFoundException e) {
+			        System.out.println(e.getMessage()+"excep1");
+			    } catch (ClassNotFoundException e) {
+			        System.out.println(e.getMessage()+"excep2");
+			    } catch (IOException e) {
+			        System.out.println(e.getMessage()+"exce3");
+			    } finally {
+			        try {
+			            if (fileInStr != null) {
+			            	fileInStr.close();
+			            }
+			            if (entrada != null) {
+			                entrada.close();
+			            }
+			        } catch (IOException e) {
+			            System.out.println(e.getMessage()+"excep4");
+			        }
+			    }
+				
+				
+			}		 
+		 
+		 
+		 
+		 
+		 
+		 public void guardarJugadoresSerializables() {
+				agregarJugadores() ;
+
+				FileOutputStream fileOutS = null;
+				ObjectOutputStream salida = null;
+			ArrayList<Jugador> jugadores=null;
+				try {
+					fileOutS = new FileOutputStream("archivos/GuardarJuego.txt");// permite subri el archivo que esta en el disco duro
+					salida = new ObjectOutputStream(fileOutS);
+					
+					jugadores=(ArrayList<Jugador>)main.darJugadores();
+					salida.writeObject(jugadores);
+					
+				} catch (FileNotFoundException e) {
+					
+					System.out.println(e.getMessage());
+				}catch(IOException e) {
+					System.out.println(e.getMessage());
+				
+				}finally{
+					try {
+						if (jugadores != null)
+							fileOutS.close();
+						if (salida != null)
+							salida.close();
+					} catch (IOException e) {
+						System.out.println(e.getMessage());
+					}
+				}
+				
+				
+			}
+
+
+		 
+		 
+		 
+		 
+		 
+		 public Jugador playerActual() {
+			 Jugador jugador=null;
+			 String nombre=txtNombre.getText();
+			 for(int i=0;i<main.darJugadores().size();i++) {
+				 if(main.darJugadores().get(i).darNombre().equals(nombre)) {
+					jugador=main.darJugadores().get(i); 
+				 }
+			 }
+			 return jugador;
+		}
+		 
+		 
 		 
 		 
 		 public void moverEnsayo(ActionEvent e) {
@@ -214,12 +515,16 @@ public void asignarImagenesApokemon() {
 								
 								
 								trans.setOnFinished(new EventHandler<ActionEvent>() {
-
+int puntaje=0;
 									@Override
 									public void handle(ActionEvent event) {
 										// TODO Auto-generated method stub
 										JOptionPane.showMessageDialog(null,"La distancia recorrida es: "+ (r.getTranslateX()*(-1)));
-										
+										puntaje+=5;
+										Jugador jugador=playerActual();
+										jugador.cambiarPuntaje(puntaje);
+										lblPuntaje.setText(puntaje+"");
+
 									}
 									
 								});
@@ -263,12 +568,15 @@ public void asignarImagenesApokemon() {
 								trans.play();
 								
 								trans.setOnFinished(new EventHandler<ActionEvent>() {
-
+int puntaje=0;
 									@Override
 									public void handle(ActionEvent event) {
 										// TODO Auto-generated method stub
 										JOptionPane.showMessageDialog(null,"La distancia recorrida es: "+ (r.getTranslateX()*-1));
-										
+										puntaje+=5;
+										Jugador jugador=playerActual();
+										jugador.cambiarPuntaje(puntaje);
+										lblPuntaje.setText(puntaje+"");
 									}
 									
 								});
@@ -311,12 +619,16 @@ public void asignarImagenesApokemon() {
 									
 									
 									trans.setOnFinished(new EventHandler<ActionEvent>() {
-
+int puntaje=0;
 										@Override
 										public void handle(ActionEvent event) {
 											// TODO Auto-generated method stub
 											JOptionPane.showMessageDialog(null,"La distancia recorrida es: "+ (r.getTranslateX()*(-1)));
 											System.out.println(509.0);
+											puntaje+=5;
+											Jugador jugador=playerActual();
+											jugador.cambiarPuntaje(puntaje);
+											lblPuntaje.setText(puntaje+"");
 										}
 										
 									});
@@ -337,7 +649,7 @@ public void asignarImagenesApokemon() {
 							rectangle2.setArcWidth(pok.darRadio());
 							rectangle2.setArcHeight(pok.darRadio());
 							rectangle2.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
+int puntaje=0;
 								@Override
 								public void handle(MouseEvent event) {
 									// TODO Auto-generated method stub
@@ -363,7 +675,10 @@ public void asignarImagenesApokemon() {
 										public void handle(ActionEvent event) {
 											// TODO Auto-generated method stub
 											JOptionPane.showMessageDialog(null,"La distancia recorrida es: "+ (r.getTranslateX()*-1));
-											
+											puntaje+=5;
+											Jugador jugador=playerActual();
+											jugador.cambiarPuntaje(puntaje);
+											lblPuntaje.setText(puntaje+"");
 										}
 										
 									});
@@ -406,12 +721,15 @@ public void asignarImagenesApokemon() {
 									
 									
 									trans.setOnFinished(new EventHandler<ActionEvent>() {
-
+int puntaje=0;
 										@Override
 										public void handle(ActionEvent event) {
 											// TODO Auto-generated method stub
 											JOptionPane.showMessageDialog(null,"La distancia recorrida es: "+400.0);
-										
+											puntaje+=5;
+											Jugador jugador=playerActual();
+											jugador.cambiarPuntaje(puntaje);
+											lblPuntaje.setText(puntaje+"");
 										}
 										
 									});
@@ -432,7 +750,7 @@ public void asignarImagenesApokemon() {
 							rectangle2.setArcWidth(pok.darRadio());
 							rectangle2.setArcHeight(pok.darRadio());
 							rectangle2.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
+int puntaje=0;
 								@Override
 								public void handle(MouseEvent event) {
 									// TODO Auto-generated method stub
@@ -458,7 +776,10 @@ public void asignarImagenesApokemon() {
 										public void handle(ActionEvent event) {
 											// TODO Auto-generated method stub
 											JOptionPane.showMessageDialog(null,"La distancia recorrida es: "+400.0);
-										
+											puntaje+=5;
+											Jugador jugador=playerActual();
+											jugador.cambiarPuntaje(puntaje);
+											lblPuntaje.setText(puntaje+"");
 										}
 										
 									});

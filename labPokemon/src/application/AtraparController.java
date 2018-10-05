@@ -20,6 +20,7 @@ import java.util.StringTokenizer;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+import Comparador.ComparadorNombre;
 import Excepciones.ExcepcionTextoVacio;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -221,9 +222,10 @@ public void agregarPersona() throws IOException {
 	
 	int puntaje=Integer.parseInt(lblPuntaje.getText());
 	Jugador jugador= new Jugador(nombre,puntaje);
-	main.darJugadores().add(jugador);
-	for(int i=0;i<main.darJugadores().size();i++) {
-		System.out.println(main.darJugadores().get(i).darNombre() +""+ main.darJugadores().get(i).darPuntaje());
+	main.darEntrenamiento().darJugadores().add(jugador);
+
+	for(int i=0;i<main.darEntrenamiento().darJugadores().size();i++) {
+		System.out.println(main.darEntrenamiento().darJugadores().get(i).darNombre() +""+ main.darJugadores().get(i).darPuntaje());
 
 	}
 	guardarJugadoresSerializables();
@@ -238,6 +240,7 @@ public void agregarJugadores() {
 	Jugador jugadorsito5=new Jugador("Armando", 32);
 	Jugador jugadorsito6= new Jugador("Andrea",22);
 	Jugador jugadorsito7= new Jugador("Juana",34);
+	
 	main.darJugadores().add(jugadorsito1);
 	main.darJugadores().add(jugadorsito2);
 	main.darJugadores().add(jugadorsito3);
@@ -267,7 +270,8 @@ public void archivoPokemones() {
 			
 			String imagen=data[4];
 			Pokemon poke= new Pokemon(nombrePokemon,posicion,radio,esAtrapado, imagen);
-			main.darPokemones().add(poke);
+			main.darEntrenamiento().darPokemones().add(poke);
+//			main.darPokemones().add(poke);
 		}
 		buffer.close();
 		
@@ -440,8 +444,8 @@ public void leerJugadoresSerializadosDeTxt() {
         entrada = new ObjectInputStream(fileInStr);
 
         jugadorsitos=(ArrayList<Jugador>) entrada.readObject();
-    
-        main.cambiarJugadores(jugadorsitos);
+        main.darEntrenamiento().cambiarJugadores(jugadorsitos);
+//        main.cambiarJugadores(jugadorsitos);
 
         
     } catch (FileNotFoundException e) {
@@ -478,7 +482,7 @@ ArrayList<Jugador> jugadores=null;
 		fileOutS = new FileOutputStream("archivos/GuardarJuego.txt");// permite subri el archivo que esta en el disco duro
 		salida = new ObjectOutputStream(fileOutS);
 		
-		jugadores=(ArrayList<Jugador>)main.darJugadores();
+		jugadores=(ArrayList<Jugador>)main.darEntrenamiento().darJugadores();
 		salida.writeObject(jugadores);
 		
 	} catch (FileNotFoundException e) {
@@ -553,13 +557,33 @@ public void asignarNickName(String name) {
 public Jugador playerActual() {
 	 Jugador jugador=null;
 	 String nombre=txtNombre.getText();
-	 for(int i=0;i<main.darJugadores().size();i++) {
-		 if(main.darJugadores().get(i).darNombre().equals(nombre)) {
-			jugador=main.darJugadores().get(i); 
+	 
+	 boolean estaJugador=false;
+	 for(int i=0;i<main.darEntrenamiento().darJugadores().size()&&!false;i++) {
+		 if(main.darEntrenamiento().darJugadores().get(i).equals(nombre)) {
+			 jugador=main.darEntrenamiento().darJugadores().get(i);
+			 estaJugador=true;
 		 }
+		
 	 }
+	 
+
 	 return jugador;
 }
+
+
+public void cambiarPuntajeAJugadorNuevo(Jugador jugador,int puntaje) {
+	
+	for(int i=0;i<main.darEntrenamiento().darJugadores().size();i++) {
+		ComparadorNombre comNom= new ComparadorNombre();
+		if(comNom.compare(jugador, main.darEntrenamiento().darJugadores().get(i))==0) {
+			main.darEntrenamiento().darJugadores().get(i).cambiarPuntaje(puntaje);
+		}
+	}
+	
+}
+
+
 
 
 public void guardarMiJuego() {
@@ -567,7 +591,7 @@ public void guardarMiJuego() {
 	 String nombre=txtNombre.getText();
 	 int puntajeTotal=Integer.parseInt(lblPuntaje.getText());
 	Jugador nuevoJugador=new Jugador(nombre,puntajeTotal);
-	main.darJugadores().add(nuevoJugador);
+	main.darEntrenamiento().darJugadores().add(nuevoJugador);
 }
 
 public void moverEnsayo(ActionEvent e) {
@@ -580,8 +604,8 @@ public void moverEnsayo(ActionEvent e) {
 		btnPokemon4.setDisable(true);
 		btnPokemon5.setDisable(true);
 		btnPokemon6.setDisable(true);
-		 for(int i=0;i<main.darPokemones().size();i++) {
-			 Pokemon pok= main.darPokemones().get(i);
+		 for(int i=0;i<main.darEntrenamiento().darPokemones().size();i++) {
+			 Pokemon pok= main.darEntrenamiento().darPokemones().get(i);
 			 if(pok.darImagen().equals("/img/pokemonRosa.png")) {
 
 				URL pokemon1= getClass().getResource("/img/pokemonRosa.png");
@@ -644,9 +668,14 @@ public void moverEnsayo(ActionEvent e) {
 						
 
 							puntaje+=5;
-							Jugador jugador=playerActual();
-							jugador.cambiarPuntaje(puntaje);
 							lblPuntaje.setText(puntaje+"");
+							Jugador jugador=playerActual();
+							if(jugador!=null) {
+								main.darEntrenamiento().cambiarPuntajeAJugadorNuevo(jugador, puntaje);
+//							cambiarPuntajeAJugadorNuevo(jugador, puntaje);
+							}
+							
+							
 
 						      
 						
@@ -804,6 +833,7 @@ public void moverEnsayo(ActionEvent e) {
 								puntaje+=5;
 								lblPuntaje.setText(puntaje+"");
 								Jugador jugador=playerActual();
+								
 								jugador.cambiarPuntaje(puntaje);
 //								tml.stop();
 //								Circle c= (Circle)event.getSource();
@@ -1237,6 +1267,10 @@ public void ordenarPorPuntaje() {
 			}
 		}
 	}
+	
+	
+	
+	
 //	String mensaje="";
 //	for(int i=0;i<main.darJugadores().size();i++) {
 //		mensaje+=main.darJugadores().get(i).darNombre()+"" + main.darJugadores().get(i).darPuntaje()+"\n";
