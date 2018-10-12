@@ -20,12 +20,13 @@
                         <Image url="@../img/abrazo.png" />
                      </image>
                   </ImageView>
-                  <VBox layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="119.0">
+                  <VBox layoutX="14.0" layoutY="14.0" prefHeight="264.0" prefWidth="116.0">
                      <children>
                         <Button mnemonicParsing="false" onAction="#toShowListForName" prefHeight="48.0" prefWidth="127.0" text="Lista Nombre" />
                         <Button mnemonicParsing="false" onAction="#toShowForPoints" prefHeight="48.0" prefWidth="133.0" text="Lista Puntaje" />
-                        <Button fx:id="buscarPokemon" mnemonicParsing="false" onAction="#busquedaPokemon" prefHeight="48.0" prefWidth="145.0" text="Buscar Pokemon" />
-                        <Button fx:id="btnBuscarJugador" mnemonicParsing="false" onAction="#busquedaJugador" prefHeight="59.0" prefWidth="131.0" text="Buscar Jugador" />
+                        <Button fx:id="buscarPokemon" mnemonicParsing="false" onAction="#mostrarNombrePokemonController" prefHeight="48.0" prefWidth="145.0" text="Buscar Pokemon" />
+                        <Button fx:id="btnBuscarJugador" mnemonicParsing="false" onAction="#mostrarNombreJugadorController" prefHeight="59.0" prefWidth="131.0" text="Buscar Jugador" />
+                        <Button fx:id="btnVolver" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="61.0" prefWidth="124.0" text="Volver" />
                      </children>
                   </VBox>
                   <ListView fx:id="listaNombre" layoutX="165.0" layoutY="30.0" prefHeight="327.0" prefWidth="117.0" />

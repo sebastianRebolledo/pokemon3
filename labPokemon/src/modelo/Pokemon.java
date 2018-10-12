@@ -1,6 +1,6 @@
 package modelo;
 
-public class Pokemon {
+public class Pokemon implements Comparable<Pokemon> {
 
 private String nombre;
 private String imagen;
@@ -51,7 +51,23 @@ private boolean esAtrapado;
 	public void cambiarPosX(double posX) {
 		this.posX=posX;
 	}
+
+
+	@Override
+	public int compareTo(Pokemon p1) {
+		int ret = 0;		
+		if(this.nombre.compareTo(p1.darNombre())>0) {
+			ret = 1;
+		}else if(this.nombre.compareTo(p1.darNombre())<0){
+			ret = -1;
+		}else {
+			ret=0;
+		}
+		return ret;
+	}
 	
 	
 
+	
+	
 }

@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import modelo.Entrenamiento;
 import modelo.Jugador;
+import modelo.Pokemon;
 
 class TestEntrenamiento {
 	
@@ -88,7 +89,7 @@ class TestEntrenamiento {
 	jugadoresOrdenados.add(12,jugador9);
 	jugadoresOrdenados.add(13,jugador14);
 	
-		ArrayList<Jugador >jugadoresActuales= entrenamiento.ordenarPorPuntaje(jugadoresSinOrdenar2);
+		ArrayList<Jugador >jugadoresActuales= entrenamiento.ordenarPorPuntajeJugador(jugadoresSinOrdenar2);
 		assertEquals(jugadoresOrdenados, jugadoresActuales);
 
 
@@ -157,11 +158,16 @@ class TestEntrenamiento {
 	}
 	
 	
-	
+
 	
 	
 	@Test
-	public void TestOrdenarPorNombre() {
+	public void testOrdenarPorNombrePokemon() {
+		
+	}
+	
+	@Test
+	public void TestOrdenarPorNombreJugador() {
 		
 		scenario1();
 		
@@ -219,13 +225,68 @@ class TestEntrenamiento {
 		jugadoresOrdenados.add(13,jugadorsito7);
 		
 		
-		ArrayList<Jugador >jugadoresActuales= entrenamiento.ordenarPorNombre(jugadoresSinOrdenar2);
+		ArrayList<Jugador >jugadoresActuales= entrenamiento.ordenarPorNombreJugador(jugadoresSinOrdenar2);
 		assertEquals(jugadoresOrdenados, jugadoresActuales);
 		
 		
 	}
 	
 	
+	
+	
+	@Test
+	public void testBuscarJugador() {
+		
+		scenario1();
+		
+		Jugador jugador= new Jugador("Andres", 39);
+		Jugador jugador2= new Jugador("Zakira",23);
+		Jugador jugador3= new Jugador("Carlos",45);
+		Jugador jugador4=new Jugador("Brayan",98);
+		
+		ArrayList<Jugador> jugadoresSinOrdenar= new ArrayList<Jugador>();
+		
+		jugadoresSinOrdenar.add(jugador);
+		jugadoresSinOrdenar.add(jugador2);		
+		jugadoresSinOrdenar.add(jugador3);
+		jugadoresSinOrdenar.add(jugador4);
+		
+		
+		
+		String esperado="Andres";
+		ArrayList<Jugador >jugadoresActuales= entrenamiento.ordenarPorNombreJugador(jugadoresSinOrdenar);
+
+		String actual=entrenamiento.buscarJugadorParaTest(jugadoresActuales, esperado);
+
+		assertEquals(actual,esperado);
+		
+	}
+	
+	
+	
+	
+	@Test
+	public void testOrdenarPokemon() {
+		
+		scenario1();
+		
+		Pokemon pokemon1= new Pokemon("Volvasur", 3.0, 8, false, "o");
+		Pokemon pokemon2= new Pokemon("Pikachu", 3.4, 7, false, "k");
+		Pokemon pokemon3= new Pokemon("Dragon", 9.9, 5, false, "ksl");
+		Pokemon pokemon4= new Pokemon("Dragonsito", 2.5, 3, false, "ok");
+		
+		ArrayList<Pokemon> pokemonesSinOrdenar= new ArrayList<Pokemon>();
+		pokemonesSinOrdenar.add(pokemon1);
+		pokemonesSinOrdenar.add(pokemon4);		
+		pokemonesSinOrdenar.add(pokemon3);
+		pokemonesSinOrdenar.add(pokemon2);
+		String actual="Volvasur";
+		ArrayList<Pokemon> pokemonesOrdenados= entrenamiento.ordenarPorNombrePokemon(pokemonesSinOrdenar);
+		String encontrado= entrenamiento.buscarPokemon(pokemonesOrdenados,actual);
+		assertEquals(actual,encontrado);
+		
+		
+	}
 	
 	
 	@Test
@@ -289,37 +350,6 @@ Jugador[] jugadoresOrdenados= new Jugador[14];
 		assertArrayEquals( jugadoresActualesOrdenados,jugadoresOrdenados);
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-//	@Test
-//	public void TestOrdearPorPuntajeArreglo() {
-//		scenario1();
-//		ArrayList<Jugador> jugadores= entrenamiento.darJugadores();
-//		Jugador[] jugadoresShort= new Jugador[jugadores.size()];
-//		for(int i=0;i<jugadores.size();i++) {
-//			jugadoresShort[i]=jugadores.get(i);
-//		}
-//		
-//		Jugador[] jugadoresActuales=entrenamiento.jugadoresInsercionDirecta(jugadores);
-//		
-//	}
-//	
-//	@Test
-//	public void TestOrdenarPorNombre() {
-//		scenario1();
-//		
-//		
-//		ArrayList<Jugador> jugadores= entrenamiento.darJugadores();
-//		
-//		ArrayList<Jugador> jugadoresActuales=entrenamiento.ordenarPorNombre(jugadores);
-//		
-//
-//	}
 	
 	
 	

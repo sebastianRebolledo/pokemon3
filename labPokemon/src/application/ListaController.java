@@ -1,5 +1,9 @@
 package application;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -7,7 +11,14 @@ import javax.swing.JOptionPane;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextInputDialog;
@@ -16,6 +27,11 @@ import modelo.Pokemon;
 
 public class ListaController {
 
+	
+	
+	@FXML
+	private Button btnVolver;
+	
 	@FXML
 	private ListView listaNombre;
 	
@@ -51,17 +67,26 @@ public class ListaController {
 
 
 	
+	//Obtiene el arraylist serializable y se lo asigna al arraylist de jugadores del main
+
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
 	public void toShowForPoints() {
+		
 		main.darAtrapar().leerJugadoresSerializadosDeTxt();
-
-
-		ArrayList<Jugador> jugadores=main.darEntrenamiento().ordenarPorPuntaje(main.darEntrenamiento().darJugadores());
+		ArrayList<Jugador> jugadores=main.darEntrenamiento().ordenarPorPuntajeJugador(main.darEntrenamiento().darJugadores());
 		for(int i=jugadores.size()-1;i>=0;i--) {
 			System.out.println("Entro a puntaje");
-			dataListaPuntos.add(jugadores.get(i).darNombre()+ " " +"P:" + jugadores.get(i).darPuntaje());	
+			dataListaPuntos.add(jugadores.get(i).darNombre()+ " - " +"Puntaje : " + jugadores.get(i).darPuntaje());	
 		}
 
 
@@ -73,10 +98,15 @@ public class ListaController {
 	
 	
 	
+	
+	
+	
+	
 	public void toShowListForName() {
+		
 		main.darAtrapar().leerJugadoresSerializadosDeTxt();
 
-	main.darEntrenamiento().ordenarPorNombre(main.darEntrenamiento().darJugadores());	
+	    main.darEntrenamiento().ordenarPorNombreJugador(main.darEntrenamiento().darJugadores());	
 		for(int i=0;i<main.darEntrenamiento().darJugadores().size();i++) {
 			System.out.println("Entro");
 			dataListaNombre.add(main.darEntrenamiento().darJugadores().get(i).darNombre());	
@@ -90,7 +120,7 @@ public class ListaController {
 	
 	
 	
-	public void busquedaJugador() {
+	public void mostrarNombreJugadorController() {
 
 		 String nombreJugador="";
 		
@@ -110,10 +140,17 @@ public class ListaController {
 		 result.ifPresent(name -> System.out.println("Your name: " + name));
 		 nombreJugador=result.get();
 //		 txtNombre.setText(result.get());
-		 ArrayList<Jugador> jugadores= main.darEntrenamiento().ordenarPorNombre(main.darEntrenamiento().darJugadores());
+		 ArrayList<Jugador> jugadores= main.darEntrenamiento().ordenarPorNombreJugador(main.darEntrenamiento().darJugadores());
 		 String encontro=main.darEntrenamiento().buscarJugador(jugadores, nombreJugador);
 		 
-		 JOptionPane.showMessageDialog(null,encontro );
+		 Alert alert = new Alert(AlertType.INFORMATION);
+		 alert.setTitle("Jugador");
+		 alert.setHeaderText("Informacion acerca del jugador");
+		 alert.setContentText(encontro);
+
+		 alert.showAndWait();
+		 
+//		 JOptionPane.showMessageDialog(null,encontro );
 	}
 
 
@@ -122,15 +159,28 @@ public class ListaController {
 
 
 
+    @FXML
+    public void handleButtonAction(ActionEvent event) throws IOException{
+        Stage stage; 
+        Parent root;
+        
+          
+        
+        stage=(Stage) btnVolver.getScene().getWindow();
+        root = FXMLLoader.load(getClass().getResource("Sample.fxml"));
+      
+   
+         Scene scene = new Scene(root);
+         stage.setScene(scene);
+         stage.show();
+       }
 
 
 
 
 
 
-
-
-	public void busquedaPokemon() {
+	public void mostrarNombrePokemonController() {
 
 		 String nombreJugador="";
 		
@@ -139,21 +189,23 @@ public class ListaController {
 		 dialog.setTitle("Text Input Dialog");
 		 dialog.setHeaderText("Look, a Text Input Dialog");
 		 dialog.setContentText("Please enter name of Pokemon:");
-		 
-		// Traditional way to get the response value.
-		
+		 		
 		 Optional<String> result = dialog.showAndWait();
 		 if (result.isPresent()){
 		     System.out.println("Your name: " + result.get());   
 		 }
-		 // The Java 8 way to get the response value (with lambda expression).
 		 result.ifPresent(name -> System.out.println("Your name: " + name));
 		 nombreJugador=result.get();
-//		 txtNombre.setText(result.get());
+
 		 ArrayList<Pokemon> pokemones= main.darEntrenamiento().ordenarPorNombrePokemon(main.darEntrenamiento().darPokemones());
 		 String encontro=main.darEntrenamiento().buscarPokemon(pokemones, nombreJugador);
 		 
-		 JOptionPane.showMessageDialog(null,encontro );
+		 Alert alert = new Alert(AlertType.INFORMATION);
+		 alert.setTitle("Pokemon");
+		 alert.setHeaderText("Informacion acerca del pokemon");
+		 alert.setContentText("Pokemon que buscas: " + encontro);
+
+		 alert.showAndWait();
 	}
 	
 	

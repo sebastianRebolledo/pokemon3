@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 
-<BorderPane prefHeight="556.0" prefWidth="628.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AtraparController">
+<BorderPane prefHeight="571.0" prefWidth="824.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AtraparController">
    <center>
       <BorderPane prefHeight="474.0" prefWidth="550.0" BorderPane.alignment="CENTER">
          <center>
@@ -29,11 +29,11 @@
             </AnchorPane>
          </center>
          <right>
-            <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <Pane prefHeight="471.0" prefWidth="218.0" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fitHeight="456.0" fitWidth="191.0" layoutX="-1.0" layoutY="-1.0">
+                  <ImageView fitHeight="456.0" fitWidth="218.0" layoutX="-28.0" layoutY="-1.0">
                      <image>
-                        <Image url="@../../../../../Desktop/Ash_pokemon.png" />
+                        <Image url="@../img/Ash_pokemon.png" />
                      </image>
                   </ImageView>
                   <Label fx:id="lblNickName" layoutX="14.0" layoutY="14.0" prefHeight="36.0" prefWidth="59.0" />

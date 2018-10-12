@@ -55,7 +55,7 @@ public class SampleController {
 		txtNickName= new TextField();
 		
 		atrapar= new AtraparController();
-		atrapar.leerJugadoresSerializadosDeTxt();
+//		atrapar.leerJugadoresSerializadosDeTxt();
 //		guardarNickName();
 
 
