@@ -14,7 +14,7 @@
    <top>
       <ImageView fitHeight="91.0" fitWidth="599.0" BorderPane.alignment="CENTER">
          <image>
-            <Image url="@../../../../pokebanner.png" />
+            <Image url="@../img/pokebanner.png" />
          </image>
       </ImageView>
    </top>
@@ -34,11 +34,7 @@
                   <Button fx:id="btnAtrapar" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="102.0" prefWidth="139.0" text="Atrapar" GridPane.columnIndex="1" />
                </children>
             </GridPane>
-            <ImageView fitHeight="99.0" fitWidth="318.0">
-               <image>
-                  <Image url="@../../../../Tracker/pokemonsitos.png" />
-               </image>
-            </ImageView>
+            <Button fx:id="btnListas" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="105.0" prefWidth="119.0" text="Listas Jugadores" />
          </children>
       </HBox>
    </bottom>
@@ -47,7 +43,7 @@
          <children>
             <ImageView fitHeight="213.0" fitWidth="600.0" layoutX="-1.0">
                <image>
-                  <Image url="@../../../../151715_200529.jpg" />
+                  <Image url="@../img/151715_200529.jpg" />
                </image>
             </ImageView>
          </children>

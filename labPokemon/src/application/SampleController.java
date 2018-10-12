@@ -23,6 +23,10 @@ import modelo.Jugador;
 
 public class SampleController {
 
+	
+	
+	@FXML
+	private Button btnListas;
 	@FXML
 	Image imagen;
 	@FXML
@@ -112,12 +116,15 @@ public class SampleController {
         root = FXMLLoader.load(getClass().getResource("lanzar.fxml"));
       
          }
-        else {
+        else if(event.getSource()==btnAtrapar) {
     		
         	 stage=(Stage) btnAtrapar.getScene().getWindow(); 
         	  root = FXMLLoader.load(getClass().getResource("Atrapar.fxml"));
         	
 
+         }else {
+        	 stage=(Stage) btnAtrapar.getScene().getWindow(); 
+       	  root = FXMLLoader.load(getClass().getResource("ListaController.fxml"));
          }
 
          Scene scene = new Scene(root);

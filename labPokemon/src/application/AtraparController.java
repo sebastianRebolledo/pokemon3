@@ -1361,12 +1361,20 @@ main.darEntrenamiento().ordenarPorNombre(main.darEntrenamiento().darJugadores())
 		dataLista.add(main.darEntrenamiento().darJugadores().get(i).darNombre());	
 	}
 
-
+dataLista.clear();
 	
 	lista1.setItems(dataLista);
 	
 	
 }
+
+
+
+
+
+
+
+
 
 
 

@@ -1,5 +1,6 @@
 package application;
 	
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javafx.application.Application;
@@ -16,6 +17,8 @@ import javafx.fxml.FXMLLoader;
 public class Main extends Application {
 	@FXML
 private Stage stage;
+	
+	private static AtraparController atrapar;
 	private static ArrayList<Jugador> jugadores;
 	private static ArrayList<Pokemon> pokemones;
 	private static Pokemon pokemon;
@@ -65,6 +68,12 @@ public void cambiarJugadores(ArrayList<Jugador> jugadorsitos) {
 }
 
 	public static void main(String[] args) {
+		try {
+			atrapar= new AtraparController();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		pokemones= new ArrayList<Pokemon>();
 		jugadores= new ArrayList<Jugador>();
 //		
@@ -96,6 +105,11 @@ public void cambiarJugadores(ArrayList<Jugador> jugadorsitos) {
 	
 	public Stage darEstage() {
 		return stage;
+	}
+	
+	
+	public AtraparController darAtrapar() {
+		return atrapar;
 	}
 	
 	

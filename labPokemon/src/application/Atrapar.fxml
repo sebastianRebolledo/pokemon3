@@ -2,18 +2,13 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 
@@ -36,41 +31,15 @@
          <right>
             <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <VBox layoutY="6.0" prefHeight="546.0" prefWidth="189.0">
-                     <children>
-                        <Label fx:id="lblNickName" prefHeight="36.0" prefWidth="59.0" />
-                        <TextField fx:id="txtNombre" />
-                        <Label prefHeight="38.0" prefWidth="47.0" text="Puntaje" />
-                        <Label fx:id="lblPuntaje" prefHeight="30.0" prefWidth="152.0" />
-                        <GridPane prefHeight="146.0" prefWidth="152.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <Button fx:id="guardar" mnemonicParsing="false" onAction="#guardarArchivoEnComputadora" prefHeight="49.0" prefWidth="96.0" text="Guardar Juego" />
-                              <Button mnemonicParsing="false" onAction="#toShowListForName" prefHeight="47.0" prefWidth="173.0" text="Lista Nombres" GridPane.columnIndex="1" />
-                              <Button mnemonicParsing="false" onAction="#toShowForPoints" prefHeight="58.0" prefWidth="152.0" text="Lista Puntajes" GridPane.rowIndex="1" />
-                              <Button fx:id="btnCargarJuego" mnemonicParsing="false" onAction="#cargarJuegoDeMiComputadora" prefHeight="66.0" prefWidth="160.0" text="Cargar Juego" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <Button fx:id="btnVolver" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="53.0" prefWidth="152.0" text="Volver" GridPane.rowIndex="3" />
-                              <Button fx:id="btnBuscarJugador" mnemonicParsing="false" onAction="#busquedaJugador" prefHeight="52.0" prefWidth="103.0" text="Buscar Jugador" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <Button fx:id="buscarPokemon" mnemonicParsing="false" onAction="#busquedaPokemon" prefHeight="43.0" prefWidth="95.0" text="Buscar Pokemon" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                           </children>
-                        </GridPane>
-                        <HBox prefHeight="275.0" prefWidth="189.0">
-                           <children>
-                              <ListView fx:id="lista1" prefHeight="200.0" prefWidth="200.0" />
-                              <ListView fx:id="lista2" prefHeight="200.0" prefWidth="200.0" />
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
+                  <ImageView fitHeight="456.0" fitWidth="191.0" layoutX="-1.0" layoutY="-1.0">
+                     <image>
+                        <Image url="@../../../../../Desktop/Ash_pokemon.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="lblNickName" layoutX="14.0" layoutY="14.0" prefHeight="36.0" prefWidth="59.0" />
+                  <TextField fx:id="txtNombre" layoutX="6.0" layoutY="50.0" />
+                  <Label layoutX="6.0" layoutY="103.0" prefHeight="38.0" prefWidth="47.0" text="Puntaje" />
+                  <Label fx:id="lblPuntaje" layoutX="9.0" layoutY="154.0" prefHeight="30.0" prefWidth="152.0" />
                </children>
             </Pane>
          </right>
@@ -79,12 +48,15 @@
    <bottom>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btnPokemon1" mnemonicParsing="false" onAction="#moverEnsayo" prefHeight="100.0" prefWidth="82.0" />
-            <Button fx:id="btnPokemon2" mnemonicParsing="false" onAction="#moverEnsayo" prefHeight="102.0" prefWidth="88.0" />
-            <Button fx:id="btnPokemon3" mnemonicParsing="false" onAction="#moverEnsayo" prefHeight="104.0" prefWidth="85.0" />
+            <Button fx:id="btnPokemon1" mnemonicParsing="false" onAction="#moverEnsayo" prefHeight="100.0" prefWidth="73.0" />
+            <Button fx:id="btnPokemon2" mnemonicParsing="false" onAction="#moverEnsayo" prefHeight="100.0" prefWidth="73.0" />
+            <Button fx:id="btnPokemon3" mnemonicParsing="false" onAction="#moverEnsayo" prefHeight="100.0" prefWidth="79.0" />
             <Button fx:id="btnPokemon4" mnemonicParsing="false" onAction="#moverEnsayo" prefHeight="103.0" prefWidth="85.0" />
-            <Button fx:id="btnPokemon5" mnemonicParsing="false" onAction="#moverEnsayo" prefHeight="100.0" prefWidth="99.0" />
-            <Button fx:id="btnPokemon6" mnemonicParsing="false" onAction="#moverEnsayo" prefHeight="100.0" prefWidth="99.0" />
+            <Button fx:id="btnPokemon5" mnemonicParsing="false" onAction="#moverEnsayo" prefHeight="100.0" prefWidth="81.0" />
+            <Button fx:id="btnPokemon6" mnemonicParsing="false" onAction="#moverEnsayo" prefHeight="100.0" prefWidth="67.0" />
+            <Button fx:id="guardar" mnemonicParsing="false" onAction="#guardarArchivoEnComputadora" prefHeight="100.0" prefWidth="96.0" text="Guardar juego" />
+            <Button fx:id="btnCargarJuego" mnemonicParsing="false" onAction="#cargarJuegoDeMiComputadora" prefHeight="100.0" prefWidth="109.0" text="Cargar Juego" />
+            <Button fx:id="btnVolver" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="100.0" prefWidth="91.0" text="Volver" />
          </children>
       </HBox>
    </bottom>
