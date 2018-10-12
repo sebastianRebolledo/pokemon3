@@ -31,7 +31,7 @@
               </rowConstraints>
                <children>
                   <Button fx:id="btnLanzar" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="98.0" prefWidth="139.0" text="Lanzar" />
-                  <Button fx:id="btnAtrapar" mnemonicParsing="false" onAction="#handleButtonAction" onMouseClicked="#guardarNickNameAtrapar" prefHeight="102.0" prefWidth="139.0" text="Atrapar" GridPane.columnIndex="1" />
+                  <Button fx:id="btnAtrapar" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="102.0" prefWidth="139.0" text="Atrapar" GridPane.columnIndex="1" />
                </children>
             </GridPane>
             <ImageView fitHeight="99.0" fitWidth="318.0">

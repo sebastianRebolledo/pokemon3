@@ -15,6 +15,8 @@ import java.io.PrintWriter;
 import java.net.URL;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.StringTokenizer;
 
 import javax.swing.JFileChooser;
@@ -37,10 +39,12 @@ import javafx.geometry.Bounds;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -64,6 +68,10 @@ public class AtraparController {
 	private SampleController sample;
 	private static Main main;
 	
+	
+	@FXML
+	private Button btnBuscarJugador;
+	
 	@FXML
 	private ListView lista1;
 	
@@ -81,6 +89,9 @@ public class AtraparController {
 	private Button btnCargarJuego;
 	
 	
+	
+	@FXML
+	private Button buscarPokemon;
 	
 	@FXML
 	private Button guardar;
@@ -141,18 +152,21 @@ public class AtraparController {
 		main=new Main();
 
 archivoPokemones() ;
+//agregarJugadores();
 
-guardarJugadoresSerializables();
+//guardarJugadoresSerializables();
 
 
 	}
 	
 	
 public void initialize() throws IOException {
+	guardarNickName() ;
+//	choosePokemon();
 	sample=new SampleController();
 
-	txtNombre.setText(sample.darNombre());
-	txtNombre.setDisable(false);
+//	txtNombre.setText(sample.darNombre());
+//	txtNombre.setDisable(false);
 	lblPuntaje.setText("0");
 	lblNickName.setText("NickName");
 
@@ -203,6 +217,103 @@ public void initialize() throws IOException {
 	
 
 
+public void guardarNickName() {
+
+	 
+	
+	 
+	 TextInputDialog dialog = new TextInputDialog("name");
+	 dialog.setTitle("Text Input Dialog");
+	 dialog.setHeaderText("Look, a Text Input Dialog");
+	 dialog.setContentText("Please enter your name:");
+	 
+	// Traditional way to get the response value.
+	
+	 Optional<String> result = dialog.showAndWait();
+	 if (result.isPresent()){
+	     System.out.println("Your name: " + result.get());   
+	 }
+	 // The Java 8 way to get the response value (with lambda expression).
+	 result.ifPresent(name -> System.out.println("Your name: " + name));
+	 txtNombre.setText(result.get());
+}
+
+
+
+
+
+
+public void busquedaJugador() {
+
+	 String nombreJugador="";
+	
+	 
+	 TextInputDialog dialog = new TextInputDialog("name");
+	 dialog.setTitle("Text Input Dialog");
+	 dialog.setHeaderText("Look, a Text Input Dialog");
+	 dialog.setContentText("Please enter name of player:");
+	 
+	// Traditional way to get the response value.
+	
+	 Optional<String> result = dialog.showAndWait();
+	 if (result.isPresent()){
+	     System.out.println("Your name: " + result.get());   
+	 }
+	 // The Java 8 way to get the response value (with lambda expression).
+	 result.ifPresent(name -> System.out.println("Your name: " + name));
+	 nombreJugador=result.get();
+//	 txtNombre.setText(result.get());
+	 ArrayList<Jugador> jugadores= main.darEntrenamiento().ordenarPorNombre(main.darEntrenamiento().darJugadores());
+	 String encontro=main.darEntrenamiento().buscarJugador(jugadores, nombreJugador);
+	 
+	 JOptionPane.showMessageDialog(null,encontro );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public void busquedaPokemon() {
+
+	 String nombreJugador="";
+	
+	 
+	 TextInputDialog dialog = new TextInputDialog("name");
+	 dialog.setTitle("Text Input Dialog");
+	 dialog.setHeaderText("Look, a Text Input Dialog");
+	 dialog.setContentText("Please enter name of Pokemon:");
+	 
+	// Traditional way to get the response value.
+	
+	 Optional<String> result = dialog.showAndWait();
+	 if (result.isPresent()){
+	     System.out.println("Your name: " + result.get());   
+	 }
+	 // The Java 8 way to get the response value (with lambda expression).
+	 result.ifPresent(name -> System.out.println("Your name: " + name));
+	 nombreJugador=result.get();
+//	 txtNombre.setText(result.get());
+	 ArrayList<Pokemon> pokemones= main.darEntrenamiento().ordenarPorNombrePokemon(main.darEntrenamiento().darPokemones());
+	 String encontro=main.darEntrenamiento().buscarPokemon(pokemones, nombreJugador);
+	 
+	 JOptionPane.showMessageDialog(null,encontro );
+}
+
+
+
+
+
+
 public TextField darNombretxt() {
 	return txtNombre;
 }
@@ -230,25 +341,6 @@ public void agregarPersona() throws IOException {
 	}
 	guardarJugadoresSerializables();
 
-}
-
-public void agregarJugadores() {
-	Jugador jugadorsito1=new Jugador("Carmen",4);
-	Jugador jugadorsito2= new Jugador("Marcela",14);
-	Jugador jugadorsito3= new Jugador("Julian",23);
-	Jugador jugadorsito4=new Jugador("Jose" , 12);
-	Jugador jugadorsito5=new Jugador("Armando", 32);
-	Jugador jugadorsito6= new Jugador("Andrea",22);
-	Jugador jugadorsito7= new Jugador("Juana",34);
-	
-	main.darJugadores().add(jugadorsito1);
-	main.darJugadores().add(jugadorsito2);
-	main.darJugadores().add(jugadorsito3);
-	main.darJugadores().add(jugadorsito4);
-	main.darJugadores().add(jugadorsito5);
-	main.darJugadores().add(jugadorsito6);
-	main.darJugadores().add(jugadorsito7);
-	
 }
 
 
@@ -348,8 +440,6 @@ public void escribirEnTextoLosJugadoresYPuntajes() throws IOException {
  PrintWriter fileResul = new PrintWriter(file2);
 	 
 	 try {
-		 
-		        
 				for(int i=0;i<main.darJugadores().size();i++) {
 					int puntaje=(int) main.darJugadores().get(i).darPuntaje();
 					String nombre=(String)main.darJugadores().get(i).darNombre();
@@ -378,20 +468,20 @@ public void escribirEnTextoLosJugadoresYPuntajes() throws IOException {
 
 
 public void guardarArchivoEnComputadora(ActionEvent e) throws IOException {
+	guardarJugadoresSerializables();
+	
 	
 	if (e.getSource()==guardar) {
+		
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setInitialFileName("Puntaje");
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
 		fileChooser.getExtensionFilters().add(extFilter);
 		fileChooser.setSelectedExtensionFilter(extFilter);
 		File file = fileChooser.showSaveDialog(main.darEstage());
-		
-		
-		
+	
 //		BufferedReader buffer= new BufferedReader(fileReader);
-		
-
+	
 		
 		if(file!=null){
 			
@@ -438,14 +528,19 @@ public void leerJugadoresSerializadosDeTxt() {
     ObjectInputStream entrada = null;
 
   ArrayList<Jugador> jugadorsitos;
+  
     try {
 
-    	fileInStr = new FileInputStream("archivos/GuardarJuego.txt");
+    	fileInStr = new FileInputStream("archivos/nuevo.dat");
         entrada = new ObjectInputStream(fileInStr);
 
         jugadorsitos=(ArrayList<Jugador>) entrada.readObject();
         main.darEntrenamiento().cambiarJugadores(jugadorsitos);
-//        main.cambiarJugadores(jugadorsitos);
+        
+        for(int i=0;i<main.darEntrenamiento().darJugadores().size();i++) {
+        	System.out.println(main.darEntrenamiento().darJugadores().get(i).darNombre()+"\n");
+        }
+
 
         
     } catch (FileNotFoundException e) {
@@ -473,13 +568,18 @@ public void leerJugadoresSerializadosDeTxt() {
 //ESTE METODO GUARDA LOS JUGADORES Y LOS TRANSFORMA DE FORMA BINARIA A UN TEXTO
 
 public void guardarJugadoresSerializables() {
-	agregarJugadores() ;
+//	agregarJugadores() ;
 
+	String nombre=txtNombre.getText();
+	int puntaje= Integer.parseInt(lblPuntaje.getText());
+	Jugador j= new Jugador(nombre,puntaje);
+	main.darEntrenamiento().darJugadores().add(j);
+	
 	FileOutputStream fileOutS = null;
 	ObjectOutputStream salida = null;
 ArrayList<Jugador> jugadores=null;
 	try {
-		fileOutS = new FileOutputStream("archivos/GuardarJuego.txt");// permite subri el archivo que esta en el disco duro
+		fileOutS = new FileOutputStream("archivos/nuevo.dat");// permite subri el archivo que esta en el disco duro
 		salida = new ObjectOutputStream(fileOutS);
 		
 		jugadores=(ArrayList<Jugador>)main.darEntrenamiento().darJugadores();
@@ -515,7 +615,7 @@ ArrayList<Jugador> jugadores=null;
 
 
 
-
+/////como  guardar archivos serializados.
 
 
 public Label darLabel() {
@@ -543,9 +643,7 @@ public void handleButtonAction(ActionEvent event) throws IOException{
      
    }
 
-public void impirmir() {
-	
-}
+
 
 public void asignarNickName(String name) {
 	lblNickName.setText(name);
@@ -559,7 +657,7 @@ public Jugador playerActual() {
 	 String nombre=txtNombre.getText();
 	 
 	 boolean estaJugador=false;
-	 for(int i=0;i<main.darEntrenamiento().darJugadores().size()&&!false;i++) {
+	 for(int i=0;i<main.darEntrenamiento().darJugadores().size()&&!estaJugador;i++) {
 		 if(main.darEntrenamiento().darJugadores().get(i).equals(nombre)) {
 			 jugador=main.darEntrenamiento().darJugadores().get(i);
 			 estaJugador=true;
@@ -572,27 +670,10 @@ public Jugador playerActual() {
 }
 
 
-public void cambiarPuntajeAJugadorNuevo(Jugador jugador,int puntaje) {
-	
-	for(int i=0;i<main.darEntrenamiento().darJugadores().size();i++) {
-		ComparadorNombre comNom= new ComparadorNombre();
-		if(comNom.compare(jugador, main.darEntrenamiento().darJugadores().get(i))==0) {
-			main.darEntrenamiento().darJugadores().get(i).cambiarPuntaje(puntaje);
-		}
-	}
-	
-}
 
 
 
 
-public void guardarMiJuego() {
-	
-	 String nombre=txtNombre.getText();
-	 int puntajeTotal=Integer.parseInt(lblPuntaje.getText());
-	Jugador nuevoJugador=new Jugador(nombre,puntajeTotal);
-	main.darEntrenamiento().darJugadores().add(nuevoJugador);
-}
 
 public void moverEnsayo(ActionEvent e) {
 	
@@ -1219,75 +1300,65 @@ int puntaje=0;
 
 
 
-public void ordernarPorNombre() {
-	
-	agregarJugadores();
-	for(int i=0;i<main.darJugadores().size();i++) {
-		Jugador porInserta=(Jugador)main.darJugadores().get(i);
-		boolean termino=false;
-		
-		for(int j=i;j>0&&!termino;j--) {
-			Jugador actual=(Jugador)main.darJugadores().get(j-1);
-			if(actual.compareTo(porInserta)>0) {
-				main.darJugadores().set(j, actual);
-				main.darJugadores().set(j-1, porInserta);
-				
-				
-			}else {
-				termino=true;
-			}
-		}
-	}
-//	String mensaje="";
+//public void ordernarPorNombre() {
+//	
+////	agregarJugadores();
 //	for(int i=0;i<main.darJugadores().size();i++) {
-//		mensaje+=main.darJugadores().get(i).darNombre()+"\n";
+//		Jugador porInserta=(Jugador)main.darJugadores().get(i);
+//		boolean termino=false;
+//		
+//		for(int j=i;j>0&&!termino;j--) {
+//			Jugador actual=(Jugador)main.darJugadores().get(j-1);
+//			if(actual.compareTo(porInserta)>0) {
+//				main.darJugadores().set(j, actual);
+//				main.darJugadores().set(j-1, porInserta);
+//				
+//				
+//			}else {
+//				termino=true;
+//			}
+//		}
 //	}
-//	JOptionPane.showMessageDialog(null,mensaje);
-	
-	
-	
-}
+//
+//	
+//	
+//	
+//}
 
 
-public void ordenarPorPuntaje() {
-	agregarJugadores();
-	for(int i=0;i<main.darJugadores().size();i++) {
-		Jugador porInserta=(Jugador)main.darJugadores().get(i);
-		boolean termino=false;
-		
-		for(int j=i;j>0&&!termino;j--) {
-			Jugador actual=(Jugador)main.darJugadores().get(j-1);
-			if(actual.compareToPuntos(porInserta)>0) {
-				main.darJugadores().set(j, actual);
-				main.darJugadores().set(j-1, porInserta);
-				
-				
-			}else {
-				termino=true;
-			}
-		}
-	}
-	
-	
-	
-	
-//	String mensaje="";
+//public void ordenarPorPuntaje() {
+////	agregarJugadores();
 //	for(int i=0;i<main.darJugadores().size();i++) {
-//		mensaje+=main.darJugadores().get(i).darNombre()+"" + main.darJugadores().get(i).darPuntaje()+"\n";
+//		Jugador porInserta=(Jugador)main.darJugadores().get(i);
+//		boolean termino=false;
+//		
+//		for(int j=i;j>0&&!termino;j--) {
+//			Jugador actual=(Jugador)main.darJugadores().get(j-1);
+//			if(actual.compareToPuntos(porInserta)>0) {
+//				main.darJugadores().set(j, actual);
+//				main.darJugadores().set(j-1, porInserta);
+//				
+//				
+//			}else {
+//				termino=true;
+//			}
+//		}
 //	}
-//	JOptionPane.showMessageDialog(null,mensaje);
-	
-}
+//	
+//
+//	
+//}
 
 
 
 
-public void mostrarListaPorNombre() {
-	ordernarPorNombre();
-	
-	for(int i=0;i<main.darJugadores().size();i++) {
+public void toShowListForName() {
+	leerJugadoresSerializadosDeTxt();
+
+main.darEntrenamiento().ordenarPorNombre(main.darEntrenamiento().darJugadores());	
+	for(int i=0;i<main.darEntrenamiento().darJugadores().size();i++) {
 		System.out.println("Entro");
-		dataLista.add(main.darJugadores().get(i).darNombre());	
+		dataLista.add(main.darEntrenamiento().darJugadores().get(i).darNombre());	
 	}
 
 
@@ -1299,13 +1370,16 @@ public void mostrarListaPorNombre() {
 
 
 
-public void mostrarListaPorPuntaje() {
-	ordenarPorPuntaje();
+public void toShowForPoints() {
+	leerJugadoresSerializadosDeTxt() ;
+//	ordenarPorPuntaje();
 //	System.out.println("Entro a puntaje1");
 
-	for(int i=0;i<main.darJugadores().size();i++) {
+	ArrayList<Jugador> jugadores=main.darEntrenamiento().ordenarPorPuntaje(main.darEntrenamiento().darJugadores());
+//	main.darEntrenamiento().ordenarPorPuntosInserccion(main.darEntrenamiento().darJugadores());
+	for(int i=jugadores.size()-1;i>=0;i--) {
 		System.out.println("Entro a puntaje");
-		dataLista2.add(main.darJugadores().get(i).darNombre()+ " " +"P:" + main.darJugadores().get(i).darPuntaje());	
+		dataLista2.add(jugadores.get(i).darNombre()+ " " +"P:" + jugadores.get(i).darPuntaje());	
 	}
 
 
@@ -1318,6 +1392,54 @@ public void mostrarListaPorPuntaje() {
 
 
 
+//public void choosePokemon() {
+//	List<String> choices = new ArrayList<>();
+//	choices.add("Bulbasaur");
+//	choices.add("Ivysaur");
+//	choices.add("Charmander");
+//	
+//
+//	
+//
+//	ChoiceDialog<String> dialog = new ChoiceDialog<>("Pokemones", choices);
+//	dialog.setTitle("Choice Dialog");
+//	dialog.setHeaderText("Look, a Choice Dialog");
+//	dialog.setContentText("Choose your Pokemon:");
+//
+//	// Traditional way to get the response value.
+//	Optional<String> result = dialog.showAndWait();
+//	if (result.isPresent()){
+//	    System.out.println("Your choice: " + result.get());
+//	}
+//
+//	// The Java 8 way to get the response value (with lambda expression).
+//	result.ifPresent(letter -> System.out.println("Your choice: " + letter));
+//	
+//	
+//}
+
+public void movePokemon(String name) {
+	
+	String routePokemon="";
+	if(name.equals("Charmander")) {
+//		routePokemon
+	}else if(name.equals("Bulbasaur")) {
+		
+	}else {
+		
+	}
+	
+	
+	for(int i=0;i<main.darEntrenamiento().darPokemones().size();i++) {
+		Pokemon pokemon= main.darEntrenamiento().darPokemones().get(i);
+//		if() {
+//			
+//		}
+	}
+	
+	
+	
+}
 
 
 

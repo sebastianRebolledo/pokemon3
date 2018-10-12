@@ -3,6 +3,7 @@ package modelo;
 import java.util.ArrayList;
 
 import Comparador.ComparadorNombre;
+import Comparador.ComparadorNombrePokemon;
 
 
 
@@ -16,18 +17,26 @@ public class Entrenamiento {
 	public Entrenamiento() {
 		jugadores= new ArrayList<Jugador>();
 		pokemones=new ArrayList<Pokemon>();
-//		addNewPlayers();
+		addNewPlayers();
 	}
+	
+	
+
 	
 	
 	public void cambiarJugadores(ArrayList<Jugador> jugadores) {
 		this.jugadores=jugadores;
 	}
 	
+
+	
 	
 	public ArrayList<Jugador> darJugadores(){
 		return jugadores;
 	}
+	
+	
+	
 	
 	public ArrayList<Pokemon> darPokemones(){
 		return pokemones;
@@ -163,6 +172,48 @@ public ArrayList<Jugador> ordenarPorNombre(ArrayList<Jugador> jugadores) {
 	}	
 	return jugadores;
 }
+
+
+
+
+
+
+
+
+public ArrayList<Pokemon> ordenarPorNombrePokemon(ArrayList<Pokemon> pokemones) {
+	
+	for(int i=0;i<pokemones.size();i++) {
+		Pokemon porInserta=(Pokemon)pokemones.get(i);
+		boolean termino=false;
+		
+		for(int j=i;j>0&&!termino;j--) {
+			Pokemon actual=(Pokemon)pokemones.get(j-1);
+			ComparadorNombrePokemon comNom= new ComparadorNombrePokemon();		
+			if(comNom.compare(actual,porInserta)>0) {
+				pokemones.set(j, actual);
+				pokemones.set(j-1, porInserta);
+				
+				
+			}else {
+				termino=true;
+			}
+		}
+	}	
+	return pokemones;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -316,7 +367,138 @@ public void cambiarPuntajeAJugadorNuevo(Jugador jugador,int puntaje) {
 	
 	
 	
+				
+				public String buscarJugador(ArrayList<Jugador> jugadores,String nombre) {
+					String nombreJugador="No se econtro el jugador";
+					Jugador jugadorsitos[]= new Jugador[jugadores.size()];
+					for(int i=0;i<jugadores.size();i++) {
+						jugadorsitos[i]=jugadores.get(i);
+						
+					}
+					
+					boolean encontro=false;
+					int inicio=0;
+					int fin=jugadorsitos.length-1;
+//					ComparadorNombre comNom= new ComparadorNombre();
+					while(inicio<=fin&&!encontro) {
+						int medio=(inicio+fin)/2;
+						if(jugadorsitos[medio].darNombre().equals(nombre)) {
+							encontro=true;
+							nombreJugador=jugadorsitos[medio].darNombre()+" "+"Puntaje " + jugadorsitos[medio].darPuntaje();
+						}else if(jugadorsitos[medio].darNombre().compareTo(nombre)>0) {
+							fin=medio-1;
+						}else {
+							inicio=medio+1;
+						}
+						
+					}
+					return nombreJugador;
+				}
 	
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				public String buscarPokemon(ArrayList<Pokemon> pokemones1,String nombre) {
+					String nombreJugador="No se econtro el jugador";
+					Pokemon pokemonsitos[]= new Pokemon[pokemones1.size()];
+					for(int i=0;i<pokemones1.size();i++) {
+						pokemonsitos[i]=pokemones1.get(i);
+						
+					}
+					
+					boolean encontro=false;
+					int inicio=0;
+					int fin=pokemonsitos.length-1;
+//					ComparadorNombre comNom= new ComparadorNombre();
+					while(inicio<=fin&&!encontro) {
+						int medio=(inicio+fin)/2;
+						if(pokemonsitos[medio].darNombre().equals(nombre)) {
+							encontro=true;
+							nombreJugador=pokemonsitos[medio].darNombre();
+						}else if(pokemonsitos[medio].darNombre().compareTo(nombre)>0) {
+							fin=medio-1;
+						}else {
+							inicio=medio+1;
+						}
+						
+					}
+					return nombreJugador;
+				}
+	
+				
+				
+				
+				
+				
+				
+				
+//				public boolean buscarBinario(int valor) {
+//					boolean encontro=false;
+//					int inicio=0;
+//					int fin=valores.length-1;
+//					while(inicio<=fin&&!encontro) {
+//						int medio=(inicio+fin)/2;
+//						
+//						if(valores[medio]==valor) {
+//							encontro=true;
+//						}else if(valores[medio]>valor) {
+//							fin=medio-1;
+//						}else {
+//							inicio=medio+1;
+//						}
+//						
+//					}
+//					
+//					return encontro;
+//					
+//				}
+//				
+				
+				
+				
+				//public void buscarPuntajeJugadorBinario() {
+//				boolean encontro=false;
+//				String nombre= JOptionPane.showInputDialog("Digite el el nombre que busca");
+			//	
+			//System.out.println(nombre);
+			//	
+//				int inicio=0;
+//				int fin= main.darJugadores().size()-1;
+//				int posicion;
+			//	
+////				ordenarInsercion();
+			//	
+//				while (inicio<=fin&&!encontro) {
+//					posicion=(inicio+fin)/2;
+//					if (main.darJugadores().get(posicion).darNombre().equalsIgnoreCase(nombre)) {
+//						System.out.println("Entro");
+//						String nombreJugador=main.darJugadores().get(posicion).darNombre();
+//						JOptionPane.showMessageDialog(null,"Nombre Jugador" +nombreJugador +""+"Puntaje"+main.darJugadores().get(posicion).darPuntaje());
+//						encontro=true;
+//					}else if(main.darJugadores().get(posicion).darNombre().length()<nombre.length()) {
+//							inicio= posicion+1;
+//						}else {
+//							fin = posicion-1;
+//						}
+//					}
+			//	
+//				JOptionPane.showMessageDialog(null,"El jugador que buscas no se encontro");
+			//
+			//}
+
+				
+				
+				
+				
+				
 	
 	
 }

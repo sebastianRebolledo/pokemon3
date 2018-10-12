@@ -2,6 +2,7 @@ package application;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -14,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -26,11 +28,15 @@ public class SampleController {
 	@FXML
 	private Button btnLanzar;
 	
+	
+	@FXML
+	private Stage stage;
 	@FXML
 	private Button btnAtrapar;
 	
-@FXML
-private TextField txtNickName;
+ @FXML
+ private TextField txtNickName;
+ 
    @FXML
    private Button btnVolver;
 	
@@ -45,7 +51,8 @@ private TextField txtNickName;
 		txtNickName= new TextField();
 		
 		atrapar= new AtraparController();
-		guardarNickName();
+		atrapar.leerJugadoresSerializadosDeTxt();
+//		guardarNickName();
 
 
 	}
@@ -53,25 +60,38 @@ private TextField txtNickName;
 	
 	public void initalize() {
 
-
+		
 	
 	}
  
-	public void guardarNickNameAtrapar() {
 
-	}
-	
 	public void guardarNickName() {
 
-		 String nombre = JOptionPane.showInputDialog("Digita tu nombre porfavor :D");	
-		 this.nombre=nombre;
-		 Jugador nuevoJugador=new Jugador(nombre,0);
-		 main.darEntrenamiento().darJugadores().add(nuevoJugador);
-//		 main.darJugadores().add(nuevoJugador);
-//		 atrapar.guardarJugadoresSerializables();
-//		 atrapar.modificarNombreTxt(nombre);
-//		 atrapar.darNombretxt().setText(nombre);
-//		 atrapar.asignarNickName(nombre);
+//		 String nombre = JOptionPane.showInputDialog("Digita tu nombre porfavor :D");	
+//		 this.nombre=nombre;
+//		 Jugador nuevoJugador=new Jugador(nombre,0);
+//		 main.darEntrenamiento().darJugadores().add(nuevoJugador);
+		 
+		
+		 
+		 TextInputDialog dialog = new TextInputDialog("walter");
+		 dialog.setTitle("Text Input Dialog");
+		 dialog.setHeaderText("Look, a Text Input Dialog");
+		 dialog.setContentText("Please enter your name:");
+		 
+		// Traditional way to get the response value.
+		 Optional<String> result = dialog.showAndWait();
+		 if (result.isPresent()){
+		     System.out.println("Your name: " + result.get());
+		 }
+
+		 // The Java 8 way to get the response value (with lambda expression).
+		 result.ifPresent(name -> System.out.println("Your name: " + name));
+		 
+		 
+		 
+		
+
 
 	}
 	
@@ -90,21 +110,16 @@ private TextField txtNickName;
         
          stage=(Stage) btnLanzar.getScene().getWindow();
         root = FXMLLoader.load(getClass().getResource("lanzar.fxml"));
-//        guardarNickName();
+      
          }
-        else if(event.getSource()==btnAtrapar){
+        else {
     		
         	 stage=(Stage) btnAtrapar.getScene().getWindow(); 
         	  root = FXMLLoader.load(getClass().getResource("Atrapar.fxml"));
-//        	  guardarNickName();
+        	
 
          }
- 
-        else{
-          stage=(Stage) btnVolver.getScene().getWindow();
-          root = FXMLLoader.load(getClass().getResource("Sample.fxml"));
-          
-         }
+
          Scene scene = new Scene(root);
          stage.setScene(scene);
          stage.show();
@@ -115,6 +130,10 @@ private TextField txtNickName;
    public TextField darTextFiel(){
 	 return txtNickName;
    }
+   
+   
+   
+   
   
 	
 	

@@ -1,6 +1,6 @@
-rosa;509.0;50.0;false;/img/pokemonRosa.png;
-Rana;509.0;50.1;false;/img/pokemonDorado.png;
-dragon;509.0;50.4;false;/img/pokemon3.png;
-pickachu;509.0;50.0;false;/img/pikachu.png;
-dragonRojo;509.0;50.0;false;/img/pokemonDragon.jpg;
-sapotico;509.0;50.0;false;/img/pokemon1.png;
+Bulbasaur;509.0;50.0;false;/img/pokemonRosa.png;
+Ivysaur;509.0;50.1;false;/img/pokemonDorado.png;
+Venusaur;509.0;50.4;false;/img/pokemon3.png;
+Charmander;509.0;50.0;false;/img/pikachu.png;
+Charmeleon;509.0;50.0;false;/img/pokemonDragon.jpg;
+Charizard;509.0;50.0;false;/img/pokemon1.png;
