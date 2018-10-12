@@ -125,9 +125,7 @@ public class LanzarController {
 		public LanzarController() {
 			lblNickName=new Label();
 			txtNombre= new TextField();
-guardarNickName();
-			
-			
+            guardarNickName();
 			pokemon= new Pokemon("Pkachu",509.0,50.0,false,"/img/pokemon1.png");
 			rectangle2= new Rectangle();
 			rBandera= new Rectangle();
