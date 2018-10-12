@@ -734,8 +734,8 @@ public void moverEnsayo(ActionEvent e) {
 			btnPokemon5.setDisable(true);
 			btnPokemon6.setDisable(true);
 		 
-		 for(int i=0;i<main.darPokemones().size();i++) {
-			 Pokemon pok= main.darPokemones().get(i);
+		 for(int i=0;i<main.darEntrenamiento().darPokemones().size();i++) {
+			 Pokemon pok= main.darEntrenamiento().darPokemones().get(i);
 			
 			 if(pok.darImagen().equals("/img/pokemonDorado.png")) {
 				 System.out.println(pok.darRadio());
@@ -809,8 +809,8 @@ public void moverEnsayo(ActionEvent e) {
 			btnPokemon6.setDisable(true);
 			
 			
-			 for(int i=0;i<main.darPokemones().size();i++) {
-				 Pokemon pok= main.darPokemones().get(i);
+			 for(int i=0;i<main.darEntrenamiento().darPokemones().size();i++) {
+				 Pokemon pok= main.darEntrenamiento().darPokemones().get(i);
 				 if(pok.darImagen().equals("/img/pokemon3.png")) {
 					 System.out.println(pok.darRadio());
 					 URL pokemon1= getClass().getResource("/img/pokemon3.png");
@@ -893,8 +893,8 @@ public void moverEnsayo(ActionEvent e) {
 			
 			
 			
-			 for(int i=0;i<main.darPokemones().size();i++) {
-				 Pokemon pok= main.darPokemones().get(i);
+			 for(int i=0;i<main.darEntrenamiento().darPokemones().size();i++) {
+				 Pokemon pok= main.darEntrenamiento().darPokemones().get(i);
 				 if(pok.darImagen().equals("/img/pikachu.png")) {
 					 URL pokemon1= getClass().getResource("/img/pikachu.png");
 						Image poke= new Image(pokemon1.toString(),34,34,false,true);
@@ -987,8 +987,8 @@ int puntaje=0;
 			
 			
 			
-			 for(int i=0;i<main.darPokemones().size();i++) {
-				 Pokemon pok= main.darPokemones().get(i);
+			 for(int i=0;i<main.darEntrenamiento().darPokemones().size();i++) {
+				 Pokemon pok= main.darEntrenamiento().darPokemones().get(i);
 				 if(pok.darImagen().equals("/img/pokemonDragon.jpg")) {
 
 					 URL pokemon1= getClass().getResource("/img/pokemonDragon.jpg");
@@ -1067,13 +1067,13 @@ int puntaje=0;
 				 }
 			 }
 		}else {
-			 for(int i=0;i<main.darPokemones().size();i++) {
+			 for(int i=0;i<main.darEntrenamiento().darPokemones().size();i++) {
 				 btnPokemon2.setDisable(true);
 					btnPokemon3.setDisable(true);
 					btnPokemon4.setDisable(true);
 					btnPokemon5.setDisable(true);
 					btnPokemon1.setDisable(true);
-				 Pokemon pok= main.darPokemones().get(i);
+				 Pokemon pok= main.darEntrenamiento().darPokemones().get(i);
 				 if(pok.darImagen().equals("/img/pokemon1.png")) {
 //					rectangle2.setLayoutX(pok.darPosX());
 //					rectangle2.setArcWidth(pok.darRadio());

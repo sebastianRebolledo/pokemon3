@@ -2,14 +2,12 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 
 <BorderPane xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.LanzarController">
@@ -20,38 +18,31 @@
                <children>
                   <ImageView fitHeight="449.0" fitWidth="628.0">
                      <image>
-                        <Image url="@../../../../../Desktop/entrenamiento.jpg" />
+                        <Image url="@../img/entrenamiento.jpg" />
                      </image>
                   </ImageView>
                   <Rectangle fx:id="rectangle2" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="532.0" layoutY="329.0" onDragDetected="#moverEnsayo" onMouseClicked="#moverYCambiarPokemon" stroke="BLACK" strokeType="INSIDE" width="51.0" />
                   <Rectangle fx:id="rBandera" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="42.0" layoutX="63.0" layoutY="308.0" stroke="BLACK" strokeType="INSIDE" width="39.0" />
                   <HBox layoutX="1.0" layoutY="449.0" prefHeight="100.0" prefWidth="628.0">
                      <children>
-                        <Button fx:id="btnPokemon1" mnemonicParsing="false" onAction="#eligioPokemon" onMouseClicked="#initalize" prefHeight="102.0" prefWidth="89.0" />
-                        <Button fx:id="btnPokemon2" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#eligioPokemon" onMouseClicked="#initalize" prefHeight="102.0" prefWidth="89.0" />
-                        <Button fx:id="btnPokemon3" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#eligioPokemon" onMouseClicked="#initalize" prefHeight="102.0" prefWidth="89.0" />
-                        <Button fx:id="btnPokemon4" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#eligioPokemon" onMouseClicked="#initalize" prefHeight="102.0" prefWidth="89.0" />
-                        <Button fx:id="btnPokemon5" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#eligioPokemon" onMouseClicked="#initalize" prefHeight="102.0" prefWidth="89.0" />
-                        <Button fx:id="btnPokemon6" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#eligioPokemon" onMouseClicked="#initalize" prefHeight="102.0" prefWidth="89.0" />
-                        <Button fx:id="btnVolver" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="102.0" prefWidth="89.0" text="Volver" />
+                        <Button fx:id="btnPokemon1" mnemonicParsing="false" onAction="#eligioPokemon" onMouseClicked="#initalize" prefHeight="100.0" prefWidth="69.0" />
+                        <Button fx:id="btnPokemon2" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#eligioPokemon" onMouseClicked="#initalize" prefHeight="100.0" prefWidth="71.0" />
+                        <Button fx:id="btnPokemon3" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#eligioPokemon" onMouseClicked="#initalize" prefHeight="100.0" prefWidth="73.0" />
+                        <Button fx:id="btnPokemon4" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#eligioPokemon" onMouseClicked="#initalize" prefHeight="100.0" prefWidth="68.0" />
+                        <Button fx:id="btnPokemon5" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#eligioPokemon" onMouseClicked="#initalize" prefHeight="100.0" prefWidth="67.0" />
+                        <Button fx:id="btnPokemon6" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#eligioPokemon" onMouseClicked="#initalize" prefHeight="100.0" prefWidth="70.0" />
+                        <Button fx:id="btnVolver" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="100.0" prefWidth="69.0" text="Volver" />
+                        <Button fx:id="guardar" mnemonicParsing="false" onAction="#guardarArchivoEnComputadora" prefHeight="100.0" prefWidth="97.0" text="Guardar Juego" />
+                        <Button fx:id="btnCargarJuego" mnemonicParsing="false" onAction="#cargarJuegoDeMiComputadora" prefHeight="100.0" prefWidth="96.0" text="Cargar Juego" />
                      </children>
                   </HBox>
+                  <Label layoutX="473.0" layoutY="39.0" prefHeight="31.0" prefWidth="102.0" text="NickName" />
+                  <Label layoutX="473.0" layoutY="81.0" prefHeight="26.0" prefWidth="102.0" text="Puntaje" />
+                  <Label fx:id="lblPuntaje" layoutX="452.0" layoutY="128.0" prefHeight="17.0" prefWidth="105.0" />
+                  <TextField fx:id="txtNombre" layoutX="473.0" layoutY="14.0" />
                </children>
             </AnchorPane>
          </left>
       </BorderPane>
    </center>
-   <right>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label prefHeight="31.0" prefWidth="102.0" text="NickName" />
-            <TextField fx:id="txtNombre" />
-            <Label prefHeight="26.0" prefWidth="102.0" text="Puntaje" />
-            <Label fx:id="lblPuntaje" prefHeight="17.0" prefWidth="105.0" />
-            <Button fx:id="guardar" mnemonicParsing="false" onAction="#guardarArchivoEnComputadora" prefHeight="52.0" prefWidth="100.0" text="Guardar Juego" />
-            <Button fx:id="btnCargarJuego" mnemonicParsing="false" onAction="#cargarJuegoDeMiComputadora" prefHeight="51.0" prefWidth="102.0" text="Cargar Juego" />
-            <ListView prefHeight="236.0" prefWidth="100.0" />
-         </children>
-      </VBox>
-   </right>
 </BorderPane>

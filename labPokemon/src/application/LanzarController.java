@@ -14,6 +14,7 @@ import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import javax.swing.JOptionPane;
 
@@ -36,6 +37,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -110,17 +112,51 @@ public class LanzarController {
 	  
 	  private Pokemon pokemon;
 	  
-		public void initalize() {
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+		public LanzarController() {
+			lblNickName=new Label();
+			txtNombre= new TextField();
+guardarNickName();
 			
 			
+			pokemon= new Pokemon("Pkachu",509.0,50.0,false,"/img/pokemon1.png");
+			rectangle2= new Rectangle();
+			rBandera= new Rectangle();
+			URL pokemon2= getClass().getResource("/img/bandera.jpg");
+			Image imagen2= new Image(pokemon2.toString(),85,85,false,true);
+			rBandera.setFill(new ImagePattern(imagen2));			
+			main= new Main();
+			
+			archivoPokemones() ;
+			guardarJugadoresSerializables();
+		
 
-			txtNombre.setText(sample.darNombre());
-			txtNombre.setDisable(false);
+		}
+	
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+		public void initalize() {
+		
 			lblPuntaje.setText("0");
 			lblNickName.setText("NickName");
 			asignarImagenesApokemon() ;
 			
-
 			rectangle2.setHeight(pokemon.darRadio());
 			rectangle2.setWidth(pokemon.darRadio());
 			
@@ -131,40 +167,34 @@ public class LanzarController {
 	
 	  
 	  
-		public LanzarController() {
-			lblNickName=new Label();
-			txtNombre= new TextField();
-			
-//			asignarImagenesApokemon();
-			try {
-				sample=new SampleController();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			pokemon= new Pokemon("Pkachu",509.0,50.0,false,"/img/pokemon1.png");
-			rectangle2= new Rectangle();
-			rBandera= new Rectangle();
-			URL pokemon2= getClass().getResource("/img/bandera.jpg");
-			Image imagen2= new Image(pokemon2.toString(),85,85,false,true);
-			rBandera.setFill(new ImagePattern(imagen2));
-//			rectangle2.setX(pokemon.darPosX());
-//			rectangle2.setHeight(pokemon.darRadio());
-//			rectangle2.setWidth(pokemon.darRadio());
-//			pokemon= new Pokemon(0,2.0,false);
-//			rectangle2= new Rectangle();
-//			rectangle2.setWidth(pokemon.darRadio());
-			
-			main= new Main();
-			
-			archivoPokemones() ;
 
-			guardarJugadoresSerializables();
+	
 		
+		
+		public void guardarNickName() {
 
+		
+			 
+			 TextInputDialog dialog = new TextInputDialog("name");
+			 dialog.setTitle("Text Input Dialog");
+			 dialog.setHeaderText("Look, a Text Input Dialog");
+			 dialog.setContentText("Please enter your name:");
+			 
+			// Traditional way to get the response value.
+			
+			 Optional<String> result = dialog.showAndWait();
+			 if (result.isPresent()){
+			     System.out.println("Your name: " + result.get());   
+			 }
+			 // The Java 8 way to get the response value (with lambda expression).
+			 result.ifPresent(name -> System.out.println("Your name: " + name));
+			 txtNombre.setText(result.get());
 		}
-	
-	
+
+		
+		
+		
+		
 public void asignarImagenesApokemon() {
 	URL pbolaPokemon= getClass().getResource("/img/bola.png");
 	Image bola= new Image(pbolaPokemon.toString(),34,34,false,true);
@@ -515,7 +545,7 @@ public void asignarImagenesApokemon() {
 								
 								
 								trans.setOnFinished(new EventHandler<ActionEvent>() {
-int puntaje=0;
+                                 int puntaje=0;
 									@Override
 									public void handle(ActionEvent event) {
 										// TODO Auto-generated method stub
