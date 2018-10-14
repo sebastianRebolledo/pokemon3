@@ -23,7 +23,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import Comparador.ComparadorNombre;
-import Excepciones.ExcepcionTextoVacio;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -39,6 +39,7 @@ import javafx.geometry.Bounds;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -65,13 +66,13 @@ public class AtraparController {
 	@FXML
 	Timeline timel;
 	
-	private SampleController sample;
+	
+
 	private static Main main;
 	
 	@FXML
 	private Button btnCargarJuego;
-	@FXML
-	private Button btnBuscarJugador;
+	
 	
 	@FXML
 	private ListView lista1;
@@ -79,38 +80,25 @@ public class AtraparController {
 	@FXML
 	private ListView lista2;
 	
-	
-	
-	
+	@FXML
+	private KeyFrame movePlane;
 	
 	
 	@FXML
-	private Button buscarPokemon;
+	private Label lblPoke;
+	
+
+	
+
 	
 	@FXML
 	private Button guardar;
 	@FXML
 	private Stage stage;
-	@FXML
-	private String nombre;
-	@FXML
-	   private Button btnPokemon1;
-	   
-	   @FXML
-	   private Button btnPokemon2;
-	   
-	  @FXML
-	  private Button btnPokemon3;
+
 	  
-	  @FXML
-	  private Button btnPokemon4;
-	  
-	  @FXML
-	  private Button btnPokemon5;
-	  @FXML
-	  private Button btnPokemon6;
-	  
-	 
+	 @FXML
+	 private Timeline tml;
 	  @FXML
 	  private Button btnVolver;
 	
@@ -123,155 +111,49 @@ public class AtraparController {
 	private Rectangle rectangle2;
 	
 	@FXML
-	private Label lblNickName;
-	@FXML
-	private AnchorPane anchor;
-	
-	@FXML
 	private Label lblPuntaje;
 	
 	@FXML
 	private TextField txtNombre;
 	
-	@FXML
-	private Pane pane;
+
 	
 	
 	
 	public AtraparController() throws IOException  {
-		lblNickName=new Label();
-		txtNombre= new TextField();
 		
-
+		txtNombre= new TextField();
+		  pokemonC= new Circle();
+	
+		 SecureRandom random = new SecureRandom();
+	     
+	      int dx = 1000 + random.nextInt(2000);
+	      
+	    movePlane = new KeyFrame(Duration.millis(dx),
+	       new KeyValue (pokemonC.translateXProperty(), -550));
 		main=new Main();
-
+		
 archivoPokemones() ;
 leerJugadoresSerializadosDeTxt();
 	}
 	
 	
-public void initialize() throws IOException {
-	guardarNickName() ;
-//	choosePokemon();
-	sample=new SampleController();
+   public void initialize() {
 
-//	txtNombre.setText(sample.darNombre());
-//	txtNombre.setDisable(false);
+
+	guardarNickName() ;
+		
+	choosePokemon() ;	
+	
 	lblPuntaje.setText("0");
-	lblNickName.setText("NickName");
 
 	URL bandera= getClass().getResource("/img/bandera.jpg");
 	Image imagenBandera= new Image(bandera.toString(),85,85,false,true);
 	rectangle2.setFill(new ImagePattern(imagenBandera));
-	//
-	
-	URL pbolaPokemon= getClass().getResource("/img/bola.png");
-	Image bola= new Image(pbolaPokemon.toString(),34,34,false,true);
-	pokemonC.setFill(new ImagePattern(bola));
-	 
-	URL pokemon1= getClass().getResource("/img/pokemonRosa.png");
-	Image imagen= new Image(pokemon1.toString(),85,85,false,true);
-	btnPokemon1.setGraphic(new ImageView(imagen));
-
-	
-	
-	
-	URL pokemon2= getClass().getResource("/img/pokemonDorado.png");
-	Image imagen2= new Image(pokemon2.toString(),85,85,false,true);
-	btnPokemon2.setGraphic(new ImageView(imagen2));
-
-
-	
-	URL pokemon3= getClass().getResource("/img/pokemon3.png");
-	Image imagen3= new Image(pokemon3.toString(),84,84,false,true);
-	btnPokemon3.setGraphic(new ImageView(imagen3));
-	
-
-	URL pokemon4= getClass().getResource("/img/pikachu.png");
-	Image imagen4= new Image(pokemon4.toString(),84,84,false,true);
-	btnPokemon4.setGraphic(new ImageView(imagen4));
-
-	URL pokemon5= getClass().getResource("/img/pokemonDragon.jpg");
-	Image imagen5= new Image(pokemon5.toString(),84,84,false,true);
-	btnPokemon5.setGraphic(new ImageView(imagen5));
-
-	URL pokemon6= getClass().getResource("/img/pokemon1.png");
-	Image imagen6= new Image(pokemon6.toString(),84,84,false,true);
-	btnPokemon6.setGraphic(new ImageView(imagen6));
-
-	
-	
-	
-	
-}
-	
-
-
-public void guardarNickName() {
-
-	 
-	
-	 
-	 TextInputDialog dialog = new TextInputDialog("name");
-	 dialog.setTitle("Text Input Dialog");
-	 dialog.setHeaderText("Look, a Text Input Dialog");
-	 dialog.setContentText("Please enter your name:");
-	 
-	// Traditional way to get the response value.
-	
-	 Optional<String> result = dialog.showAndWait();
-	 if (result.isPresent()){
-	     System.out.println("Your name: " + result.get());   
-	 }
-	 // The Java 8 way to get the response value (with lambda expression).
-	 result.ifPresent(name -> System.out.println("Your name: " + name));
-	 txtNombre.setText(result.get());
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public TextField darNombretxt() {
-	return txtNombre;
-}
-
-
-
-public void modificarNombreTxt(String nombre) {
-	txtNombre.setText(nombre);
-}
-
-
-
-public void agregarPersona() throws IOException {
-	
-	String nombre=txtNombre.getText();
-
-	
-	int puntaje=Integer.parseInt(lblPuntaje.getText());
-	Jugador jugador= new Jugador(nombre,puntaje);
-	main.darEntrenamiento().darJugadores().add(jugador);
-
-	for(int i=0;i<main.darEntrenamiento().darJugadores().size();i++) {
-		System.out.println(main.darEntrenamiento().darJugadores().get(i).darNombre() +""+ main.darJugadores().get(i).darPuntaje());
-
-	}
-	guardarJugadoresSerializables();
 
 }
+	
+
 
 
 public void archivoPokemones() {
@@ -305,6 +187,94 @@ public void archivoPokemones() {
 
 
 
+
+
+
+
+public void guardarNickName() {
+
+	
+	 TextInputDialog dialog = new TextInputDialog("name");
+	 dialog.setTitle("Text Input Dialog");
+	 dialog.setHeaderText("Look, a Text Input Dialog");
+	 dialog.setContentText("Please enter your name:");
+	 
+	// Traditional way to get the response value.
+	
+	 Optional<String> result = dialog.showAndWait();
+//	 if (result.isPresent()){
+//	     System.out.println("Your name: " + result.get());   
+//	 }
+	 // The Java 8 way to get the response value (with lambda expression).
+//	 result.ifPresent(name -> System.out.println("Your name: " + name));
+	 txtNombre.setText(result.get());
+}
+
+
+
+
+
+public void choosePokemon() {
+	List<String> choices = new ArrayList<>();
+	choices.add("Bulbasaur");
+	choices.add("Ivysaur");
+	choices.add("Charmander");
+	choices.add("Charmeleon");
+
+	ChoiceDialog<String> dialog = new ChoiceDialog<>("Pokemones", choices);
+	dialog.setTitle("Choice Dialog");
+	dialog.setHeaderText("Look, a Choice Dialog");
+	dialog.setContentText("Choose your Pokemon:");
+
+	Optional<String> result = dialog.showAndWait();
+	String nameElegido=result.get();
+	lblPoke.setText(nameElegido);
+	Pokemon encontrado=buscarPokemon(nameElegido);
+	String rutaImagen=encontrado.darImagen();
+	URL pokemon1= getClass().getResource(rutaImagen);
+	Image poke= new Image(pokemon1.toString(),34,34,false,true);
+	pokemonC.setFill(new ImagePattern(poke));
+	
+	tml = new Timeline();
+      tml.setCycleCount(Timeline.INDEFINITE);
+      SecureRandom random = new SecureRandom();
+      
+      int dx = 1000 + random.nextInt(2000);
+      
+     movePlane = new KeyFrame(Duration.millis(dx),
+       new KeyValue (pokemonC.translateXProperty(), -550));
+      tml.getKeyFrames().add(movePlane);
+      tml.play();
+      
+      
+  
+      
+//	
+//	if (result.isPresent()){
+//	    System.out.println("Your choice: " + result.get());
+//	}
+
+//	result.ifPresent(letter -> System.out.println("Your choice: " + letter));
+	
+	
+}
+
+
+
+
+
+
+
+	
+public String nombreDelpokemon(String name) {
+	return name;
+}
+	
+
+
+
+
+
 public void cargarJuegoDeMiComputadora(ActionEvent e) {
 	if(e.getSource()==btnCargarJuego) {
 		FileChooser fileChooser = new FileChooser();
@@ -325,8 +295,20 @@ public void cargarJuegoDeMiComputadora(ActionEvent e) {
 					String[] data= texto.split(";");
 					String nombreJugador=data[0];
 					int puntaje=Integer.parseInt(data[1]);
+					String pokemon=data[2];
 					txtNombre.setText(nombreJugador);
 					lblPuntaje.setText(puntaje+"");
+					lblPoke.setText(pokemon);
+
+					String nameElegido=nombreDelpokemon(pokemon);
+					Pokemon encontrado=buscarPokemon(nameElegido);
+					String rutaImagen=encontrado.darImagen();
+					URL pokemon1= getClass().getResource(rutaImagen);
+					Image poke= new Image(pokemon1.toString(),34,34,false,true);
+					pokemonC.setFill(new ImagePattern(poke));
+					
+					
+					
 				}
 				
 				br.close();
@@ -377,12 +359,7 @@ public void leerJugadoresSerializadosDeTxt() {
 
         jugadorsitos=(ArrayList<Jugador>) entrada.readObject();
         main.darEntrenamiento().cambiarJugadores(jugadorsitos);
-        
-        for(int i=0;i<main.darEntrenamiento().darJugadores().size();i++) {
-        	System.out.println(main.darEntrenamiento().darJugadores().get(i).darNombre()+"\n");
-        }
-
-
+      
         
     } catch (FileNotFoundException e) {
         System.out.println(e.getMessage()+"excep1");
@@ -406,49 +383,6 @@ public void leerJugadoresSerializadosDeTxt() {
 	
 }
 
-
-
-
-
-
-
-
-
-
-
-
-//Este metodo transforma los jugadores escritos o tranformado de forma binaira
-//a un texto con sus atributos
-public void escribirEnTextoLosJugadoresYPuntajes() throws IOException {
-	File file = new File("archivos/GuardarJuego.txt") ;
-	FileReader fileReader= new FileReader(file);
-	
-	File fileSalida= new File("archivos/Jugadores.txt");
-	FileWriter file2= new FileWriter(fileSalida);
-	
-//	BufferedReader buffer= new BufferedReader(fileReader);
-	
- PrintWriter fileResul = new PrintWriter(file2);
-	 
-	 try {
-				for(int i=0;i<main.darJugadores().size();i++) {
-					int puntaje=(int) main.darJugadores().get(i).darPuntaje();
-					String nombre=(String)main.darJugadores().get(i).darNombre();
-					fileResul.println(nombre+";"+puntaje+";");
-					
-				}
-				fileResul.flush();
-				
-				 fileResul.close();    
-				      
-	} catch (Exception e) {
-		// TODO: handle exception
-		System.out.println(e);
-	}
-	
-	 
-	 
-}
 
 
 
@@ -486,7 +420,9 @@ public void guardarArchivoEnComputadora(ActionEvent e) throws IOException {
 				bw = new BufferedWriter(fw);
 				String nombre=txtNombre.getText();
 				String puntaje=lblPuntaje.getText();
-				bw.write(nombre+";"+puntaje);
+				String pokemon=lblPoke.getText();
+				
+				bw.write(nombre+";"+puntaje+";"+pokemon);
 				
 //				String texto = textArea.getText();
 //				bw.write(texto, 0, texto.length());
@@ -505,11 +441,6 @@ public void guardarArchivoEnComputadora(ActionEvent e) throws IOException {
 	
 	
 }
-
-
-
-
-
 
 
 
@@ -564,16 +495,92 @@ ArrayList<Jugador> jugadores=null;
 
 
 
-/////como  guardar archivos serializados.
 
 
-public Label darLabel() {
-	return lblNickName;
+
+public void comenzarJuegoCargado(String name) {
+	
+	
+	String nameElegido=nombreDelpokemon(name);
+	Pokemon encontrado=buscarPokemon(nameElegido);
+	String rutaImagen=encontrado.darImagen();
+	URL pokemon1= getClass().getResource(rutaImagen);
+	Image poke= new Image(pokemon1.toString(),34,34,false,true);
+	pokemonC.setFill(new ImagePattern(poke));
+	
+	tml = new Timeline();
+      tml.setCycleCount(Timeline.INDEFINITE);
+      SecureRandom random = new SecureRandom();
+      
+      int dx = 1000 + random.nextInt(2000);
+      
+     movePlane = new KeyFrame(Duration.millis(dx),
+       new KeyValue (pokemonC.translateXProperty(), -550));
+      tml.getKeyFrames().add(movePlane);
+      tml.play();
+	
+	
+	
 }
 
-public void modificarLabel(String mensaje) {
-	lblNickName.setText(mensaje);
+
+
+
+
+
+
+
+
+
+public Pokemon buscarPokemon(String name) {
+	Pokemon encontrado=main.darEntrenamiento().buscarPokemonChoice(main.darEntrenamiento().darPokemones(), name);
+return encontrado;
 }
+
+
+
+
+
+public void moverBola() {
+	
+	
+	pokemonC.setOnMouseClicked(new EventHandler<MouseEvent>() {
+		int puntaje=0;
+		@Override
+		public void handle(MouseEvent event) {
+		
+			// TODO Auto-generated method stub
+			if(pokemonC.getTranslateX()>=-400) {
+				puntaje+=5;
+				lblPuntaje.setText(puntaje+"");
+				 
+				   SecureRandom random = new SecureRandom();
+				      
+				      int dx = 100000 + random.nextInt(200000000);
+				      
+				      movePlane.getTime().add(Duration.millis(dx));
+				   
+				      
+		
+				
+			      
+			}
+			
+		}
+		
+	});
+
+	
+	
+}
+
+
+
+
+
+
+
+
 
 
 @FXML
@@ -594,29 +601,43 @@ public void handleButtonAction(ActionEvent event) throws IOException{
 
 
 
-public void asignarNickName(String name) {
-	lblNickName.setText(name);
-	
-}
+
+
+////Este metodo transforma los jugadores escritos o tranformado de forma binaira
+////a un texto con sus atributos
+//public void escribirEnTextoLosJugadoresYPuntajes() throws IOException {
+//	File file = new File("archivos/GuardarJuego.txt") ;
+//	FileReader fileReader= new FileReader(file);
+//	
+//	File fileSalida= new File("archivos/Jugadores.txt");
+//	FileWriter file2= new FileWriter(fileSalida);
+//	
+////	BufferedReader buffer= new BufferedReader(fileReader);
+//	
+// PrintWriter fileResul = new PrintWriter(file2);
+//	 
+//	 try {
+//				for(int i=0;i<main.darJugadores().size();i++) {
+//					int puntaje=(int) main.darJugadores().get(i).darPuntaje();
+//					String nombre=(String)main.darJugadores().get(i).darNombre();
+//					fileResul.println(nombre+";"+puntaje+";");
+//					
+//				}
+//				fileResul.flush();
+//				
+//				 fileResul.close();    
+//				      
+//	} catch (Exception e) {
+//		// TODO: handle exception
+//		System.out.println(e);
+//	}
+//	
+//	 
+//	 
+//}
 
 
 
-public Jugador playerActual() {
-	 Jugador jugador=null;
-	 String nombre=txtNombre.getText();
-	 
-	 boolean estaJugador=false;
-	 for(int i=0;i<main.darEntrenamiento().darJugadores().size()&&!estaJugador;i++) {
-		 if(main.darEntrenamiento().darJugadores().get(i).equals(nombre)) {
-			 jugador=main.darEntrenamiento().darJugadores().get(i);
-			 estaJugador=true;
-		 }
-		
-	 }
-	 
-
-	 return jugador;
-}
 
 
 
@@ -624,676 +645,101 @@ public Jugador playerActual() {
 
 
 
-public void moverEnsayo(ActionEvent e) {
-	
-	 if(btnPokemon1==e.getSource()) {
-		
-		 
-		btnPokemon2.setDisable(true);
-		btnPokemon3.setDisable(true);
-		btnPokemon4.setDisable(true);
-		btnPokemon5.setDisable(true);
-		btnPokemon6.setDisable(true);
-		 for(int i=0;i<main.darEntrenamiento().darPokemones().size();i++) {
-			 Pokemon pok= main.darEntrenamiento().darPokemones().get(i);
-			 if(pok.darImagen().equals("/img/pokemonRosa.png")) {
-
-				URL pokemon1= getClass().getResource("/img/pokemonRosa.png");
-				Image poke= new Image(pokemon1.toString(),34,34,false,true);
-				pokemonC.setFill(new ImagePattern(poke));
-				
-				 Timeline tml = new Timeline();
-			      tml.setCycleCount(Timeline.INDEFINITE);
-			      SecureRandom random = new SecureRandom();
-			      
-			      int dx = 1000 + random.nextInt(2000);
-			      
-			      KeyFrame movePlane = new KeyFrame(Duration.millis(dx),
-			       new KeyValue (pokemonC.translateXProperty(), -550));
-			      tml.getKeyFrames().add(movePlane);
-			      tml.play();
-			      
-			      
-			      pokemonC.setOnMouseClicked(new EventHandler<MouseEvent>() {
-			    	  int puntaje=0; 
-					@Override
-					public void handle(MouseEvent event) {
-						
-						// TODO Auto-generated method stub
-						if(pokemonC.getTranslateX()>=-400) {
-							URL pokemon1= getClass().getResource("/img/bola.png");
-							Image poke= new Image(pokemon1.toString(),34,34,false,true);
-							pokemonC.setFill(new ImagePattern(poke));
-							pok.cambiarAtrapado(true);
-							
-							
-//                           Circle c= (Circle)event.getSource();
-				
-							
-							
-							
-							
-							if(pok.esAtrapado()==true) {
-								try {
-//									c.setFill(new ImagePattern(poke));
-									long a=1000;
-									long b =100;
-									Thread hilo = new Thread();
-									hilo.sleep(a);	
-									URL pokemon2= getClass().getResource("/img/pokemonRosa.png");
-									Image pok2= new Image(pokemon2.toString(),34,34,false,true);
-									pokemonC.setFill(new ImagePattern(pok2));
-									hilo.sleep(b);
-//									pokemonC.setLayoutY(400);
-								
-									
-								} catch (Exception e2) {
-									// TODO: handle exception
-								}
-							}
-							
-//							tml.stop();
-							
-							
-						
-
-							puntaje+=5;
-							lblPuntaje.setText(puntaje+"");
-							Jugador jugador=playerActual();
-							if(jugador!=null) {
-								main.darEntrenamiento().cambiarPuntajeAJugadorNuevo(jugador, puntaje);
-//							cambiarPuntajeAJugadorNuevo(jugador, puntaje);
-							}
-							
-							
-
-						      
-						
-							
-
-						}
-
-					}
-			    	  
-				});
-			      
-
-			      
-				
-				 
-			 }
-		 }
-		 
-		 
-	 }else if(btnPokemon2==e.getSource()) {
-		 
-		 
-		 btnPokemon1.setDisable(true);
-			btnPokemon3.setDisable(true);
-			btnPokemon4.setDisable(true);
-			btnPokemon5.setDisable(true);
-			btnPokemon6.setDisable(true);
-		 
-		 for(int i=0;i<main.darEntrenamiento().darPokemones().size();i++) {
-			 Pokemon pok= main.darEntrenamiento().darPokemones().get(i);
-			
-			 if(pok.darImagen().equals("/img/pokemonDorado.png")) {
-				 System.out.println(pok.darRadio());
-				 URL pokemon1= getClass().getResource("/img/pokemonDorado.png");
-					Image poke= new Image(pokemon1.toString(),34,34,false,true);
-					pokemonC.setFill(new ImagePattern(poke));
-					 SecureRandom random = new SecureRandom();
-				      int dx = 1000 + random.nextInt(2000);
-					 Timeline tml = new Timeline();
-				      tml.setCycleCount(Timeline.INDEFINITE);
-				      KeyFrame movePlane = new KeyFrame(Duration.millis(dx),
-				      new KeyValue (pokemonC.translateXProperty(), -500));
-				      tml.getKeyFrames().add(movePlane);
-				      tml.play();
-
-				pokemonC.setOnMouseClicked(new EventHandler<MouseEvent>() {
-					int puntaje=0; 
-					@Override
-					public void handle(MouseEvent event) {
-						// TODO Auto-generated method stub
-						if(pokemonC.getTranslateX()>=-400) {
-							URL pokemon1= getClass().getResource("/img/bola.png");
-							Image poke= new Image(pokemon1.toString(),34,34,false,true);
-//							pokemonC.setFill(new ImagePattern(poke));
-							
-							
-							if(pok.esAtrapado()==true) {
-								try {
-//									c.setFill(new ImagePattern(poke));
-									long a=1000;
-									long b =100;
-									Thread hilo = new Thread();
-									hilo.sleep(a);	
-									URL pokemon2= getClass().getResource("/img/pokemonRosa.png");
-									Image pok2= new Image(pokemon2.toString(),34,34,false,true);
-									pokemonC.setFill(new ImagePattern(pok2));
-									hilo.sleep(b);
-//									pokemonC.setLayoutY(400);
-								
-									
-								} catch (Exception e2) {
-									// TODO: handle exception
-								}
-							}
 
 
-							puntaje+=5;
-							lblPuntaje.setText(puntaje+"");
-							Jugador jugador=playerActual();
-							jugador.cambiarPuntaje(puntaje);
-												}
-					
-						
-					}
-					
-				}); 
-				 
-				 
-			 }
-		 }
-		 
-		 
-		 
-		}else if(btnPokemon3==e.getSource()) {
-			
-			
-			btnPokemon2.setDisable(true);
-			btnPokemon1.setDisable(true);
-			btnPokemon4.setDisable(true);
-			btnPokemon5.setDisable(true);
-			btnPokemon6.setDisable(true);
-			
-			
-			 for(int i=0;i<main.darEntrenamiento().darPokemones().size();i++) {
-				 Pokemon pok= main.darEntrenamiento().darPokemones().get(i);
-				 if(pok.darImagen().equals("/img/pokemon3.png")) {
-					 System.out.println(pok.darRadio());
-					 URL pokemon1= getClass().getResource("/img/pokemon3.png");
-						Image poke= new Image(pokemon1.toString(),34,34,false,true);
-						pokemonC.setFill(new ImagePattern(poke));
-						
-						
-						
-						 SecureRandom random = new SecureRandom();
-					      int dx = 1000 + random.nextInt(2000);
-						
-						
-						 Timeline tml = new Timeline();
-					      tml.setCycleCount(Timeline.INDEFINITE);
-					      KeyFrame movePlane = new KeyFrame(Duration.millis(dx),
-					       new KeyValue (pokemonC.translateXProperty(), -500));
-					      tml.getKeyFrames().add(movePlane);
-					      tml.play();
-
-					pokemonC.setOnMouseClicked(new EventHandler<MouseEvent>() {
-						int puntaje=0;
-						@Override
-						public void handle(MouseEvent event) {
-						
-							if(pokemonC.getTranslateX()>=-400) {
-//								URL pokemon1= getClass().getResource("/img/bola.png");
-//								Image poke= new Image(pokemon1.toString(),34,34,false,true);
-//								pokemonC.setFill(new ImagePattern(poke));
-								
-								if(pok.esAtrapado()==true) {
-									try {
-//										c.setFill(new ImagePattern(poke));
-										long a=1000;
-										long b =100;
-										Thread hilo = new Thread();
-										hilo.sleep(a);	
-										URL pokemon2= getClass().getResource("/img/pokemonRosa.png");
-										Image pok2= new Image(pokemon2.toString(),34,34,false,true);
-										pokemonC.setFill(new ImagePattern(pok2));
-										hilo.sleep(b);
-//										pokemonC.setLayoutY(400);
-									
-										
-									} catch (Exception e2) {
-										// TODO: handle exception
-									}
-								}
-								puntaje+=5;
-								lblPuntaje.setText(puntaje+"");
-								Jugador jugador=playerActual();
-								
-								jugador.cambiarPuntaje(puntaje);
-//								tml.stop();
-//								Circle c= (Circle)event.getSource();
-//								c.setFill(new ImagePattern(poke));
-								
-							}
-							
-						
-							
-					
-							
-						}
-						
-					}); 
-					 
-					 
-				 }
-			 }
-		}else if(btnPokemon4==e.getSource()) {
-			
-			
-			
-			btnPokemon2.setDisable(true);
-			btnPokemon3.setDisable(true);
-			btnPokemon1.setDisable(true);
-			btnPokemon5.setDisable(true);
-			btnPokemon6.setDisable(true);
-			
-			
-			
-			
-			 for(int i=0;i<main.darEntrenamiento().darPokemones().size();i++) {
-				 Pokemon pok= main.darEntrenamiento().darPokemones().get(i);
-				 if(pok.darImagen().equals("/img/pikachu.png")) {
-					 URL pokemon1= getClass().getResource("/img/pikachu.png");
-						Image poke= new Image(pokemon1.toString(),34,34,false,true);
-						pokemonC.setFill(new ImagePattern(poke));
-						
-						
-						
-						 SecureRandom random = new SecureRandom();
-					      int dx = 1000 + random.nextInt(2000);
-						
-						
-						 Timeline tml = new Timeline();
-					      tml.setCycleCount(Timeline.INDEFINITE);
-					      KeyFrame movePlane = new KeyFrame(Duration.millis(dx),
-					       new KeyValue (pokemonC.translateXProperty(), -500));
-					      tml.getKeyFrames().add(movePlane);
-					      tml.play();
-//					rectangle2.setLayoutX(pok.darPosX());
-//					rectangle2.setArcWidth(pok.darRadio());
-//					rectangle2.setArcHeight(pok.darRadio());
-					pokemonC.setOnMouseClicked(new EventHandler<MouseEvent>() {
-int puntaje=0;
-						@Override
-						public void handle(MouseEvent event) {
-							
-							
-							
-							
-							
-							if(pokemonC.getTranslateX()>=-400) {
-//								URL pokemon1= getClass().getResource("/img/bola.png");
-//								Image poke= new Image(pokemon1.toString(),34,34,false,true);
-//								pokemonC.setFill(new ImagePattern(poke));
-								
-								if(pok.esAtrapado()==true) {
-									try {
-//										c.setFill(new ImagePattern(poke));
-										long a=1000;
-										long b =100;
-										Thread hilo = new Thread();
-										hilo.sleep(a);	
-										URL pokemon2= getClass().getResource("/img/pokemonRosa.png");
-										Image pok2= new Image(pokemon2.toString(),34,34,false,true);
-										pokemonC.setFill(new ImagePattern(pok2));
-										hilo.sleep(b);
-//										pokemonC.setLayoutY(400);
-									
-										
-									} catch (Exception e2) {
-										// TODO: handle exception
-									}
-								}
-								puntaje+=5;
-								lblPuntaje.setText(puntaje+"");
-								Jugador jugador=playerActual();
-								jugador.cambiarPuntaje(puntaje);
-//								tml.stop();
-//								Circle c= (Circle)event.getSource();
-//								c.setFill(new ImagePattern(poke));
-								
-							}
-							
-							
-							
-							
+//public void moverEnsayo(ActionEvent e) {
+//	
+//	 if(btnPokemon1==e.getSource()) {
+//	
+//		 for(int i=0;i<main.darEntrenamiento().darPokemones().size();i++) {
+//			 Pokemon pok= main.darEntrenamiento().darPokemones().get(i);
+//			 if(pok.darImagen().equals("/img/pokemonRosa.png")) {
+//
+//				URL pokemon1= getClass().getResource("/img/pokemonRosa.png");
+//				Image poke= new Image(pokemon1.toString(),34,34,false,true);
+//				pokemonC.setFill(new ImagePattern(poke));
+//				
+//				 Timeline tml = new Timeline();
+//			      tml.setCycleCount(Timeline.INDEFINITE);
+//			      SecureRandom random = new SecureRandom();
+//			      
+//			      int dx = 1000 + random.nextInt(2000);
+//			      
+//			      KeyFrame movePlane = new KeyFrame(Duration.millis(dx),
+//			       new KeyValue (pokemonC.translateXProperty(), -550));
+//			      tml.getKeyFrames().add(movePlane);
+//			      tml.play();
+//			      
+//			      
+//			      pokemonC.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//			    	  int puntaje=0; 
+//					@Override
+//					public void handle(MouseEvent event) {
+//						
+//						// TODO Auto-generated method stub
+//						if(pokemonC.getTranslateX()>=-400) {
 //							URL pokemon1= getClass().getResource("/img/bola.png");
 //							Image poke= new Image(pokemon1.toString(),34,34,false,true);
 //							pokemonC.setFill(new ImagePattern(poke));
-							
-//							tml.stop();
-//							Circle c= (Circle)event.getSource();
-//							c.setFill(new ImagePattern(poke));
-							
-							
-						}
-						
-					}); 
-					 
-					 
-				 }
-			 }
-		}else if(btnPokemon5==e.getSource()) {
-			
-			
-			btnPokemon2.setDisable(true);
-			btnPokemon3.setDisable(true);
-			btnPokemon4.setDisable(true);
-			btnPokemon1.setDisable(true);
-			btnPokemon6.setDisable(true);
-			
-			
-			
-			 for(int i=0;i<main.darEntrenamiento().darPokemones().size();i++) {
-				 Pokemon pok= main.darEntrenamiento().darPokemones().get(i);
-				 if(pok.darImagen().equals("/img/pokemonDragon.jpg")) {
-
-					 URL pokemon1= getClass().getResource("/img/pokemonDragon.jpg");
-						Image poke= new Image(pokemon1.toString(),34,34,false,true);
-						pokemonC.setFill(new ImagePattern(poke));
-						
-						
-						
-						 SecureRandom random = new SecureRandom();
-					      int dx = 1000 + random.nextInt(2000);
-						
-						
-						
-						 Timeline tml = new Timeline();
-					      tml.setCycleCount(Timeline.INDEFINITE);
-					      KeyFrame movePlane = new KeyFrame(Duration.millis(dx),
-					       new KeyValue (pokemonC.translateXProperty(), -500));
-					      tml.getKeyFrames().add(movePlane);
-					      tml.play();
-		
-					 pokemonC.setOnMouseClicked(new EventHandler<MouseEvent>() {
-int puntaje=0;
-							@Override
-							public void handle(MouseEvent event) {
-								
-								
-								
-								
-								if(pokemonC.getTranslateX()>=-400) {
-//									URL pokemon1= getClass().getResource("/img/bola.png");
-//									Image poke= new Image(pokemon1.toString(),34,34,false,true);
-//									pokemonC.setFill(new ImagePattern(poke));
-									
-									if(pok.esAtrapado()==true) {
-										try {
-//											c.setFill(new ImagePattern(poke));
-											long a=1000;
-											long b =100;
-											Thread hilo = new Thread();
-											hilo.sleep(a);	
-											URL pokemon2= getClass().getResource("/img/pokemonRosa.png");
-											Image pok2= new Image(pokemon2.toString(),34,34,false,true);
-											pokemonC.setFill(new ImagePattern(pok2));
-											hilo.sleep(b);
-//											pokemonC.setLayoutY(400);
-										
-											
-										} catch (Exception e2) {
-											// TODO: handle exception
-										}
-									}
-									puntaje+=5;
-									lblPuntaje.setText(puntaje+"");
-									Jugador jugador=playerActual();
-									jugador.cambiarPuntaje(puntaje);
-//									tml.stop();
-//									Circle c= (Circle)event.getSource();
-//									c.setFill(new ImagePattern(poke));
-									
-								}
-								
-								
-								
-//								URL pokemon1= getClass().getResource("/img/bola.png");
-//								Image poke= new Image(pokemon1.toString(),34,34,false,true);
-////								pokemonC.setFill(new ImagePattern(poke));
+//							pok.cambiarAtrapado(true);
+//							
+//							
+////                           Circle c= (Circle)event.getSource();
+//				
+//							
+//							
+//							
+//							
+//							if(pok.esAtrapado()==true) {
+//								try {
+////									c.setFill(new ImagePattern(poke));
+//									long a=1000;
+//									long b =100;
+//									Thread hilo = new Thread();
+//									hilo.sleep(a);	
+//									URL pokemon2= getClass().getResource("/img/pokemonRosa.png");
+//									Image pok2= new Image(pokemon2.toString(),34,34,false,true);
+//									pokemonC.setFill(new ImagePattern(pok2));
+//									hilo.sleep(b);
+////									pokemonC.setLayoutY(400);
 //								
-//								tml.stop();
-//								Circle c= (Circle)event.getSource();
-//								c.setFill(new ImagePattern(poke));
-//								
-							}
-							
-						});
-					 
-				 }
-			 }
-		}else {
-			 for(int i=0;i<main.darEntrenamiento().darPokemones().size();i++) {
-				 btnPokemon2.setDisable(true);
-					btnPokemon3.setDisable(true);
-					btnPokemon4.setDisable(true);
-					btnPokemon5.setDisable(true);
-					btnPokemon1.setDisable(true);
-				 Pokemon pok= main.darEntrenamiento().darPokemones().get(i);
-				 if(pok.darImagen().equals("/img/pokemon1.png")) {
-//					rectangle2.setLayoutX(pok.darPosX());
-//					rectangle2.setArcWidth(pok.darRadio());
-//					rectangle2.setArcHeight(pok.darRadio());
-					 URL pokemon1= getClass().getResource("/img/pokemon1.png");
-						Image poke= new Image(pokemon1.toString(),34,34,false,true);
-						pokemonC.setFill(new ImagePattern(poke));
-						
-						 SecureRandom random = new SecureRandom();
-					      int dx = 1000 + random.nextInt(4000);
-						
-						
-						 Timeline tml = new Timeline();
-					      tml.setCycleCount(Timeline.INDEFINITE);
-					      KeyFrame movePlane = new KeyFrame(Duration.millis(dx),
-					       new KeyValue (pokemonC.translateXProperty(), -500));
-					      tml.getKeyFrames().add(movePlane);
-					      tml.play();
-		
-					 pokemonC.setOnMouseClicked(new EventHandler<MouseEvent>() {
-int puntaje=0;
-							@Override
-							public void handle(MouseEvent event) {
-								
-								
-								
-								
-								if(pokemonC.getTranslateX()>=-400) {
-//									URL pokemon1= getClass().getResource("/img/bola.png");
-//									Image poke= new Image(pokemon1.toString(),34,34,false,true);
-//									pokemonC.setFill(new ImagePattern(poke));
-									
-									if(pok.esAtrapado()==true) {
-										try {
-//											c.setFill(new ImagePattern(poke));
-											long a=1000;
-											long b =100;
-											Thread hilo = new Thread();
-											hilo.sleep(a);	
-											URL pokemon2= getClass().getResource("/img/pokemonRosa.png");
-											Image pok2= new Image(pokemon2.toString(),34,34,false,true);
-											pokemonC.setFill(new ImagePattern(pok2));
-											hilo.sleep(b);
-//											pokemonC.setLayoutY(400);
-										
-											
-										} catch (Exception e2) {
-											// TODO: handle exception
-										}
-									}
-									puntaje+=5;
-									lblPuntaje.setText(puntaje+"");
-									Jugador jugador=playerActual();
-									jugador.cambiarPuntaje(puntaje);
-//									tml.stop();
-//									Circle c= (Circle)event.getSource();
-//									c.setFill(new ImagePattern(poke));
-									
-								}
-								
-								
-								
-								
-								
-//								URL pokemon1= getClass().getResource("/img/bola.png");
-//								Image poke= new Image(pokemon1.toString(),34,34,false,true);
-////								pokemonC.setFill(new ImagePattern(poke));
-//								
-//								tml.stop();
-//								Circle c= (Circle)event.getSource();
-//								c.setFill(new ImagePattern(poke));
-								
-							}
-							
-						});
-					 
-				 }
-			 }
-		}
-	 
-	
-	 
-}
-
-
-
-//public void ordenarInsercion() {
-//	String mensaje = "";
-//	ArrayList<Jugador>players=(ArrayList<Jugador>)main.darJugadores();
-//	for (int i = 1; i <players.size(); i++) {
-//		
-//		for (int j = i; j>0 && players.get(j-1).compareToPuntaje(players.get(j).darPuntaje())>0; j--) {
-//			Jugador temp = players.get(i);
-//			players.add(j,players.get(j-1));
-//			players.add(j-1, temp);
-//		}
-//		
-//	}
-//	for (int i = 0; i <players.size(); i++) {			
-//			mensaje+= players.get(i).darNombre()+" "+players.get(i).darPuntaje()+"\n";
-//			}
+//									
+//								} catch (Exception e2) {
+//									// TODO: handle exception
+//								}
+//							}
+//							
+////							tml.stop();
+//							
+//							
+//						
 //
-//	JOptionPane.showMessageDialog(null,mensaje);
-//	
-//}
-
-//public String buscarJugadorBinaria() {
-//	
-//	String puntaje1= JOptionPane.showInputDialog("Digite el puntaje que busca");
-//	int puntaje=Integer.parseInt(puntaje1);
+//							puntaje+=5;
+//							lblPuntaje.setText(puntaje+"");
+//							Jugador jugador=playerActual();
+//							if(jugador!=null) {
+//								main.darEntrenamiento().cambiarPuntajeAJugadorNuevo(jugador, puntaje);
+////							cambiarPuntajeAJugadorNuevo(jugador, puntaje);
+//							}
+//							
+//							
 //
-//	ordenarInsercion();
-//	
-//	int inicio=0;
-//	int fin= main.darJugadores().size()-1;
-//	int posicion;
-//	
-//	
-//	
-//	while (inicio<=fin) {
-//		posicion=(inicio+fin)/2;
-//		if (main.darJugadores().get(posicion).darPuntaje()==puntaje) {
-//			return main.darJugadores().get(posicion).darNombre();
-//			
-//		}else if(main.darJugadores().get(posicion).darPuntaje()<puntaje) {
-//				inicio= posicion+1;
-//			}else {
-//				fin = posicion-1;
-//			}
-//		}
-//	
-//			return "No encontrado";		
-//	}
-
-	
-
-
-
-
-
-//public void buscarPuntajeJugadorBinario() {
-//	boolean encontro=false;
-//	String nombre= JOptionPane.showInputDialog("Digite el el nombre que busca");
-//	
-//System.out.println(nombre);
-//	
-//	int inicio=0;
-//	int fin= main.darJugadores().size()-1;
-//	int posicion;
-//	
-////	ordenarInsercion();
-//	
-//	while (inicio<=fin&&!encontro) {
-//		posicion=(inicio+fin)/2;
-//		if (main.darJugadores().get(posicion).darNombre().equalsIgnoreCase(nombre)) {
-//			System.out.println("Entro");
-//			String nombreJugador=main.darJugadores().get(posicion).darNombre();
-//			JOptionPane.showMessageDialog(null,"Nombre Jugador" +nombreJugador +""+"Puntaje"+main.darJugadores().get(posicion).darPuntaje());
-//			encontro=true;
-//		}else if(main.darJugadores().get(posicion).darNombre().length()<nombre.length()) {
-//				inicio= posicion+1;
-//			}else {
-//				fin = posicion-1;
-//			}
-//		}
-//	
-//	JOptionPane.showMessageDialog(null,"El jugador que buscas no se encontro");
+//						      
+//						
+//							
 //
-//}
-
-
-
-
-//public void ordernarPorNombre() {
-//	
-////	agregarJugadores();
-//	for(int i=0;i<main.darJugadores().size();i++) {
-//		Jugador porInserta=(Jugador)main.darJugadores().get(i);
-//		boolean termino=false;
-//		
-//		for(int j=i;j>0&&!termino;j--) {
-//			Jugador actual=(Jugador)main.darJugadores().get(j-1);
-//			if(actual.compareTo(porInserta)>0) {
-//				main.darJugadores().set(j, actual);
-//				main.darJugadores().set(j-1, porInserta);
+//						}
+//
+//					}
+//			    	  
+//				});
+//			      
+//
+//			      
 //				
-//				
-//			}else {
-//				termino=true;
-//			}
-//		}
-//	}
-//
-//	
-//	
-//	
-//}
-
-
-//public void ordenarPorPuntaje() {
-////	agregarJugadores();
-//	for(int i=0;i<main.darJugadores().size();i++) {
-//		Jugador porInserta=(Jugador)main.darJugadores().get(i);
-//		boolean termino=false;
-//		
-//		for(int j=i;j>0&&!termino;j--) {
-//			Jugador actual=(Jugador)main.darJugadores().get(j-1);
-//			if(actual.compareToPuntos(porInserta)>0) {
-//				main.darJugadores().set(j, actual);
-//				main.darJugadores().set(j-1, porInserta);
-//				
-//				
-//			}else {
-//				termino=true;
-//			}
-//		}
-//	}
-//	
-//
-//	
+//			 }
+//		 }
+//	 } 
 //}
 
 
@@ -1307,63 +753,6 @@ int puntaje=0;
 
 
 
-
-
-
-
-
-
-
-
-
-//public void choosePokemon() {
-//	List<String> choices = new ArrayList<>();
-//	choices.add("Bulbasaur");
-//	choices.add("Ivysaur");
-//	choices.add("Charmander");
-//	
-//
-//	
-//
-//	ChoiceDialog<String> dialog = new ChoiceDialog<>("Pokemones", choices);
-//	dialog.setTitle("Choice Dialog");
-//	dialog.setHeaderText("Look, a Choice Dialog");
-//	dialog.setContentText("Choose your Pokemon:");
-//
-//	// Traditional way to get the response value.
-//	Optional<String> result = dialog.showAndWait();
-//	if (result.isPresent()){
-//	    System.out.println("Your choice: " + result.get());
-//	}
-//
-//	// The Java 8 way to get the response value (with lambda expression).
-//	result.ifPresent(letter -> System.out.println("Your choice: " + letter));
-//	
-//	
-//}
-
-public void movePokemon(String name) {
-	
-	String routePokemon="";
-	if(name.equals("Charmander")) {
-//		routePokemon
-	}else if(name.equals("Bulbasaur")) {
-		
-	}else {
-		
-	}
-	
-	
-	for(int i=0;i<main.darEntrenamiento().darPokemones().size();i++) {
-		Pokemon pokemon= main.darEntrenamiento().darPokemones().get(i);
-//		if() {
-//			
-//		}
-	}
-	
-	
-	
-}
 
 
 

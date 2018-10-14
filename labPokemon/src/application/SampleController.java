@@ -1,5 +1,8 @@
 package application;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
@@ -18,6 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import modelo.Jugador;
 
@@ -32,7 +36,8 @@ public class SampleController {
 	@FXML
 	private Button btnLanzar;
 	
-	
+	@FXML
+	private Button cargarJuego;
 	@FXML
 	private Stage stage;
 	@FXML
@@ -68,6 +73,11 @@ public class SampleController {
 	
 	}
  
+	
+	
+	
+	
+	
 
 	public void guardarNickName() {
 
@@ -104,9 +114,21 @@ public class SampleController {
 		return nombre;
 	}
 	
+	public Button btnDarcargar() {
+		return cargarJuego;
+	}
 	
-    @FXML
-    public void handleButtonAction(ActionEvent event) throws IOException{
+	public Button btnDarAtrpar() {
+		return btnAtrapar;
+	}
+	
+	
+    
+	
+	
+	
+	@FXML
+	public void handleButtonAction(ActionEvent event) throws IOException{
         Stage stage; 
         Parent root;
         
@@ -118,12 +140,15 @@ public class SampleController {
          }
         else if(event.getSource()==btnAtrapar) {
     		
+        	
+        	
         	 stage=(Stage) btnAtrapar.getScene().getWindow(); 
         	  root = FXMLLoader.load(getClass().getResource("Atrapar.fxml"));
         	
 
-         }else {
-        	 stage=(Stage) btnAtrapar.getScene().getWindow(); 
+         }
+        else {
+        	 stage=(Stage) btnListas.getScene().getWindow(); 
        	  root = FXMLLoader.load(getClass().getResource("ListaController.fxml"));
          }
 
@@ -132,6 +157,8 @@ public class SampleController {
          stage.show();
        }
 
+	
+	
 
 
    public TextField darTextFiel(){
@@ -142,8 +169,7 @@ public class SampleController {
    
    
   
-	
-	
+
 	
 
 	

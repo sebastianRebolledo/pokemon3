@@ -455,6 +455,36 @@ public void cambiarPuntajeAJugadorNuevo(Jugador jugador,int puntaje) {
 	
 				
 				
+				public Pokemon buscarPokemonChoice(ArrayList<Pokemon> pokemones1,String nombre) {
+				
+					Pokemon pokemon=null;
+					Pokemon pokemonsitos[]= new Pokemon[pokemones1.size()];
+					for(int i=0;i<pokemones1.size();i++) {
+						pokemonsitos[i]=pokemones1.get(i);
+						
+					}
+					
+					boolean encontro=false;
+					int inicio=0;
+					int fin=pokemonsitos.length-1;
+//					ComparadorNombre comNom= new ComparadorNombre();
+					while(inicio<=fin&&!encontro) {
+						int medio=(inicio+fin)/2;
+						if(pokemonsitos[medio].darNombre().equals(nombre)) {
+							encontro=true;
+					       pokemon=pokemonsitos[medio];
+//							nombreJugador=pokemonsitos[medio].darNombre();
+						}else if(pokemonsitos[medio].darNombre().compareTo(nombre)>0) {
+							fin=medio-1;
+						}else {
+							inicio=medio+1;
+						}
+						
+					}
+					return pokemon;
+				}
+				
+				
 				
 
 				
